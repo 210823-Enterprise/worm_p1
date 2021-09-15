@@ -1,2 +1,2 @@
-# worm_p1
+# WORM
 Project 1 - Group 5 - Custom Object Relational Mapping Format
