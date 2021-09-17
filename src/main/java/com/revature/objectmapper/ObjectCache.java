@@ -25,6 +25,20 @@ public class ObjectCache {
 	}
 	
 	
+	
+	public boolean insertIntoCache(HashSet<Object> obj)
+	{
+		
+		cache.put(obj.getClass() , obj);
+		
+		
+		return false;
+		
+	}
+	
+	
+	
+	
 	// method: putObj in cache()
 	
 	// remove()
