@@ -38,6 +38,7 @@ public class ConnectionFactory
 			ds.setUrl(props.getProperty("url"));
 			ds.setUsername(props.getProperty("username"));
 			ds.setPassword(props.getProperty("password"));
+			ds.setDriverClassName("org.postgresql.Driver");
 			ds.setMinIdle(5);
 			ds.setDefaultAutoCommit(false);
 			ds.setMaxOpenPreparedStatements(100);
