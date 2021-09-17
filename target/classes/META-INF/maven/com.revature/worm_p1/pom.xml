@@ -11,7 +11,6 @@
 		<maven.compiler.target>1.8</maven.compiler.target>
 	</properties>
 
-
 <!-- https://mvnrepository.com/artifact/org.apache.commons/commons-dbcp2 -->
 <dependencies>
 
@@ -21,12 +20,11 @@
     <version>2.7.0</version>
 </dependency>
 
-
-<!-- https://mvnrepository.com/artifact/org.postgresql/postgresql -->
+		<!-- https://mvnrepository.com/artifact/org.postgresql/postgresql -->
 		<dependency>
 			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
-			<version>42.2.5</version>
+			<version>42.2.18</version>
 		</dependency>
 		
 				<!-- JUnit 4 dep -->

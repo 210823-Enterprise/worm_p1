@@ -7,6 +7,7 @@ import java.util.List;
 
 import com.revature.annotations.Column;
 import com.revature.annotations.Entity;
+import com.revature.annotations.Table;
 
 public class MetaModel<T> {
 	
@@ -14,6 +15,8 @@ public class MetaModel<T> {
 	// private IdField primarykeyField
 	private List<ColumnField> columnFields;
 	// private List<ForeignKeyField> foreignKeyFields
+	private TableField tableField;
+	private String entityName;
 	
 	// MetaModel Constructor here
 	
@@ -32,6 +35,7 @@ public class MetaModel<T> {
 	public MetaModel(Class<T> clazz) {
 		this.clazz = clazz;
 		this.columnFields = new LinkedList<>();
+		this.tableField = null;
 		
 	}
 	
@@ -65,6 +69,16 @@ public class MetaModel<T> {
 		
 		return columnFields;
 		
+	}
+	
+	public Entity getTableName() {
+		Entity name = clazz.getAnnotation(Entity.class);
+		
+		if (name != null) {
+			entityName = name.tableName();
+		}
+
+		return name;
 	}
 
 	public Method getPrimaryKey() {
