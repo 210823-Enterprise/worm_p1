@@ -7,7 +7,7 @@ import com.revature.annotations.Id;
 @Entity(tableName="test_table")
 public class Test {
 	
-	@Id(columnName = "test_id")
+	@Id(value = "test_id")
 	private int id;
 	
 	@Column(columnName="test_username")

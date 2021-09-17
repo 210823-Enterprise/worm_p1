@@ -1,6 +1,7 @@
 package com.revature.util;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -42,7 +43,7 @@ public class MetaModel<T> {
 	}
 	
 	// simple class name is just MyClass
-	public String getSimpleName() {
+	public String getSimpleClassName() {
 		
 		return clazz.getSimpleName();
 	
@@ -64,6 +65,11 @@ public class MetaModel<T> {
 		
 		return columnFields;
 		
+	}
+
+	public Method getPrimaryKey() {
+		
+		return null;
 	}
 	
 	// public List<ForeignKeyField 
