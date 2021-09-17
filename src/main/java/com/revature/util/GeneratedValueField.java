@@ -13,7 +13,7 @@ private Field field;
 		
 		if (field.getAnnotation(GeneratedValue.class)== null) {
 			// if the field object aht we pass thorugh DOESN't have the column annotation, then it returns null
-			throw new IllegalStateException("Cannot create TableField Object! Provided field " + getName() + " is not a Table");
+			throw new IllegalStateException("Cannot create GeneratedValue Object! Provided field " + getName() + " is not a Generated Value");
 		}
 		
 		this.field = field;

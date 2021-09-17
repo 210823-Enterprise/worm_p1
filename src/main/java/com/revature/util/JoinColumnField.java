@@ -13,7 +13,7 @@ private Field field;
 		
 		if (field.getAnnotation(JoinColumn.class)== null) {
 			// if the field object aht we pass thorugh DOESN't have the column annotation, then it returns null
-			throw new IllegalStateException("Cannot create TableField Object! Provided field " + getName() + " is not a Table");
+			throw new IllegalStateException("Cannot create JoinColumnField Object! Provided field " + getName() + " is not a JoinColumnField");
 		}
 		
 		this.field = field;
