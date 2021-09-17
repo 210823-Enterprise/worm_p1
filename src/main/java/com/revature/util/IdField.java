@@ -28,7 +28,7 @@ private Field field;
 	}
 	
 	public String getPrimaryKey() {
-		return field.getAnnotation(Id.class).columnName();
+		return field.getAnnotation(Id.class).value();
 	}
 	
 	
