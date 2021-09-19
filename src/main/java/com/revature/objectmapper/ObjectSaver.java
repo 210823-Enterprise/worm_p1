@@ -83,11 +83,11 @@ public class ObjectSaver extends ObjectMapper{
 		    	   System.out.println(Cols.size()+ "   "+ i);
 				   if(i < Cols.size() -1)
 				   {
-				      sql2 += Cols.get(i).getColumnName()+" , ";
+				      sql2 += "'"+Cols.get(i).getColumnName()+"' , ";
 				   }
 				   else
 				   {
-					   sql2 += Cols.get(i).getColumnName()+" )";
+					   sql2 += "'"+Cols.get(i).getColumnName()+"' )";
 				   }
 		        }
 				
