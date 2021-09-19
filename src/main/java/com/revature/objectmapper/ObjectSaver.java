@@ -15,13 +15,6 @@ public class ObjectSaver extends ObjectMapper{
 	
 	public boolean addObjectToDb(Object obj, Connection conn) {
 
-       
-		
-		
-		
-		
-		
-		
 		MetaModel<?> model = MetaModel.of(obj.getClass()); // use this to creaet an instance of the object
 		System.out.println(model.toString());
 		IdField Pk = model.getIdField();
@@ -48,8 +41,8 @@ public class ObjectSaver extends ObjectMapper{
 			System.out.println("New Record ");
 			Update = false;
 		}
-		} catch (SQLException e) {
-			
+		} catch (Exception e) {
+			System.out.println("New Record Detected , Creating new table.");
 		}
 		
 		
