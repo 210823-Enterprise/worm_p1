@@ -39,7 +39,7 @@ public class ConnectionFactory
 			ds.setUsername(props.getProperty("username"));
 			ds.setPassword(props.getProperty("password"));
 			ds.setMinIdle(5);
-			ds.setDefaultAutoCommit(false);
+			ds.setDefaultAutoCommit(true);
 			ds.setMaxOpenPreparedStatements(100);
 			
 		} 

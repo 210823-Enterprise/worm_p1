@@ -72,24 +72,24 @@ public abstract class ObjectMapper {
 	{
 		switch (s) {
 		case "String":
-			  return "varchar(255)";
+			  return "VARCHAR";
 		case "int":
-			return "varchar";
+			return "INTEGER";
 			
 		case "double":
-			return "varchar";
+			return "DOUBLE";
 			
 		case "float":
-			return "varchar";
+			return "FLOAT";
 			
 		case "long":
-			return "varchar";
+			return "BIGINT";
 			
 		case "boolean":
-			return "varchar";
+			return "BOOL";
 			
 		case "short":
-			return "varchar";
+			return "SMALLINT";
 			
 		default:
 			return "varchar";
