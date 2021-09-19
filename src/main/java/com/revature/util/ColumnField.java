@@ -31,6 +31,12 @@ public class ColumnField {
 		return field.getType();
 	}
 	
+	public String getStringType()
+	{
+		return field.getType().getSimpleName();
+		
+	}
+	
 	public String getColumnName() {
 		return field.getAnnotation(Column.class).columnName();
 	}

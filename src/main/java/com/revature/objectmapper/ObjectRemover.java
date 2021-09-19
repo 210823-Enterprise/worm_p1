@@ -5,6 +5,7 @@ import java.sql.Connection;
 import java.sql.ParameterMetaData;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.HashSet;
 
 import com.revature.util.IdField;
 import com.revature.util.MetaModel;
@@ -16,7 +17,7 @@ public class ObjectRemover extends ObjectMapper{
 		MetaModel<?> model = MetaModel.of(obj.getClass()); // use this to creaet an instance of the object
 		
 		IdField Pk = model.getIdField();
-		String sql 		  = "DELETE from " + model.getSimpleClassName() + " where " + Pk.getName() + "= "+Pk.getPrimaryKey(); // create some type of method that returns the table name in MetaModel;
+		String sql  = "DELETE from " + model.getSimpleClassName() + " where " + Pk.getName() + "= "+Pk.getValue(); // create some type of method that returns the table name in MetaModel;
 		PreparedStatement pstmt;
 		try {
 			pstmt = conn.prepareStatement(sql);

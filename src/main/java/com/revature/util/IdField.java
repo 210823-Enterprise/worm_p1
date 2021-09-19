@@ -27,7 +27,7 @@ private Field field;
 		return field.getType();
 	}
 	
-	public String getPrimaryKey() {
+	public String getValue() {
 		return field.getAnnotation(Id.class).value();
 	}
 	

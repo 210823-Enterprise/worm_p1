@@ -84,6 +84,8 @@ Field[] fields = clazz.getDeclaredFields();
 		return null;
 	}
 	
-	// public List<ForeignKeyField 
-	
+	public String getTableName()
+	{
+		return clazz.getAnnotation(Entity.class).tableName();
+	}
 }

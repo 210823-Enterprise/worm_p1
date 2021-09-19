@@ -65,13 +65,4 @@ public class ObjectCache {
 		
 		
 	}
-	
-	
-	// method: putObj in cache()
-	
-	// remove()
-
-	
-	
-	
 }
