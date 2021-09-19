@@ -47,10 +47,10 @@ public class ObjectSaver extends ObjectMapper{
 		
 		
 
-		String sql = "CREATE TABLE IF NOT EXISTS erickj."+model.getTableName()+" ( id INTEGER , ";
+		
 		List<ColumnField> Cols = model.getColumns();
 if(Update == false)
-{		
+{		String sql = "CREATE TABLE IF NOT EXISTS erickj."+model.getTableName()+" ( id INTEGER , ";
 		try
 		{
 			   for(int i =0; i < Cols.size(); i++)
@@ -131,10 +131,13 @@ if(Update == false)
 		{
 			e.printStackTrace();
 		}
-}	
-try
+	return false;		
+}
+else
 {
-String sql3 = "Update erickj."+model.getTableName()+" SET ";
+		try
+		{
+          String sql3 = "Update erickj."+model.getTableName()+" SET ";
 
        for(int i =0; i < Cols.size(); i++)
         {
@@ -184,6 +187,6 @@ catch(Exception e)
 	}
 	
 	
-	
+ }	
 
 }
