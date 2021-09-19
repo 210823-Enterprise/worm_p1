@@ -10,9 +10,9 @@ public class Test {
 	@Id(value = "1")
 	private int id;
 	
-	@Column(columnName="Username")
+	@Column(columnName="USERname")
 	private String testUsername;
 	
-	@Column(columnName="Password")
+	@Column(columnName="PassWORD")
 	private String testPass;
 }

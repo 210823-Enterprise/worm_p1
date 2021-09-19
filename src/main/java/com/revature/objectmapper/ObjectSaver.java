@@ -14,6 +14,10 @@ import com.revature.util.MetaModel;
 public class ObjectSaver extends ObjectMapper{
 	
 	public boolean addObjectToDb(Object obj, Connection conn) {
+
+       
+		
+		
 		
 		
 		
@@ -23,9 +27,37 @@ public class ObjectSaver extends ObjectMapper{
 		IdField Pk = model.getIdField();
 		
 		System.out.println(Pk.getName()+" , "+Pk.getType()+" , "+Pk.getValue());
-		String sql = "CREATE TABLE IF NOT EXISTS erickj."+model.getTableName()+" ( id int , ";
-		List<ColumnField> Cols = model.getColumns();
+		Statement stmt;
 		
+		boolean Update = false;
+		
+		String check = "SELECT * FROM erickj."+model.getTableName()+" WHERE "+Pk.getName()+" = "+Pk.getValue();
+				     
+		
+		try {
+			stmt = conn.createStatement();
+		
+	       
+		if (stmt.execute(check)) 
+		  {
+			System.out.println("Record Already Exists");
+			Update = true;
+		  }
+		else
+		{
+			System.out.println("New Record ");
+			Update = false;
+		}
+		} catch (SQLException e) {
+			
+		}
+		
+		
+
+		String sql = "CREATE TABLE IF NOT EXISTS erickj."+model.getTableName()+" ( id INTEGER , ";
+		List<ColumnField> Cols = model.getColumns();
+if(Update == false)
+{		
 		try
 		{
 			   for(int i =0; i < Cols.size(); i++)
@@ -42,7 +74,7 @@ public class ObjectSaver extends ObjectMapper{
 			   }
 			   System.out.println(sql);
 			   
-			   Statement stmt  = conn.createStatement();
+			    stmt  = conn.createStatement();
 		       
 				if (stmt.execute(sql)) 
 				  {
@@ -76,7 +108,7 @@ public class ObjectSaver extends ObjectMapper{
 		        }
 		
 		
-				sql2 += " VALUES("+Pk.getValue()+" , ";
+				sql2 += " VALUES('"+Pk.getValue()+"' , ";
 				
 				for(int i =0; i < Cols.size(); i++)
 		        {
@@ -94,7 +126,7 @@ public class ObjectSaver extends ObjectMapper{
 			
 				System.out.println(sql2);
 				   
-				   Statement stmt  = conn.createStatement();
+				   stmt  = conn.createStatement();
 			       
 					if (stmt.execute(sql2)) 
 					  {
@@ -106,8 +138,40 @@ public class ObjectSaver extends ObjectMapper{
 		{
 			e.printStackTrace();
 		}
-		
-		// we want to grab meta data from this statement
+}	
+try
+{
+String sql3 = "Update erickj."+model.getTableName()+" SET ";
+
+       for(int i =0; i < Cols.size(); i++)
+        {
+    	   System.out.println(Cols.size()+ "   "+ i);
+		   if(i < Cols.size() -1)
+		   {
+		      sql3 += Cols.get(i).getName()+" = '"+Cols.get(i).getColumnName() +"' , ";
+		   }
+		   else
+		   {
+			   sql3 += Cols.get(i).getName()+" = '"+Cols.get(i).getColumnName() +"'  ";
+		   }
+        }
+
+	sql3 += " WHERE id ='"+Pk.getValue()+"';";	
+	
+		System.out.println(sql3);
+		   
+		   stmt  = conn.createStatement();
+	       
+			if (stmt.execute(sql3)) 
+			  {
+				System.out.println("Successfully Updated!");
+				return true;
+			  }
+}
+catch(Exception e)
+{
+	e.printStackTrace();
+}		// we want to grab meta data from this statement
 		
 		
 		// instead of Method, maybe pass in a hashmap containing info about the object that you

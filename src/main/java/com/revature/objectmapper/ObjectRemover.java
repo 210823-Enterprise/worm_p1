@@ -17,14 +17,12 @@ public class ObjectRemover extends ObjectMapper{
 		MetaModel<?> model = MetaModel.of(obj.getClass()); // use this to creaet an instance of the object
 		
 		IdField Pk = model.getIdField();
-		String sql  = "DELETE from " + model.getSimpleClassName() + " where " + Pk.getName() + "= "+Pk.getValue(); // create some type of method that returns the table name in MetaModel;
+		String sql  = "DELETE FROM " + model.getSimpleClassName() + " WHERE " + Pk.getName() + "= "+Pk.getValue(); // create some type of method that returns the table name in MetaModel;
 		PreparedStatement pstmt;
 		try {
 			pstmt = conn.prepareStatement(sql);
 			ParameterMetaData pd = pstmt.getParameterMetaData();
 			setStatement(pstmt, pd, null, obj, 1);
-			
-			
 			pstmt.executeUpdate();
 			return true;
 		} catch (SQLException e) {

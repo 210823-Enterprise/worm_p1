@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.util.List;
 import com.revature.connection.ConnectionFactory;
 import com.revature.dummymodels.Test;
+import com.revature.objectmapper.ObjectRemover;
 import com.revature.objectmapper.ObjectSaver;
 import com.revature.util.ColumnField;
 import com.revature.util.Configuration;
@@ -22,11 +23,11 @@ public class OrmDriver {
 		// this is just to prove that we successfully transformed it to a metamodel, readable by our framework
 		// let's iterate over all meta models that exist in the config object
 				
-			
+			///ObjectRemover objR = new ObjectRemover();
 			 ObjectSaver objS =  new ObjectSaver();
 			
 			objS.addObjectToDb(new Test(), conn);
-			
+			//objR.removeObjectFromDb(new Test(), conn);
 			
 		
 		}
