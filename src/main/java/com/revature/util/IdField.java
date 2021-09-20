@@ -3,6 +3,7 @@ package com.revature.util;
 import java.lang.reflect.Field;
 
 import com.revature.annotations.Id;
+import com.revature.dummymodels.Test;
 
 public class IdField {
 
@@ -17,6 +18,7 @@ private Field field;
 		}
 		
 		this.field = field;
+		System.out.println(field.getModifiers());
 	}
 	
 	public String getName() {
@@ -27,10 +29,24 @@ private Field field;
 		return field.getType();
 	}
 	
-	public String getPrimaryKey() {
-		return field.getAnnotation(Id.class).value();
+	public String getColumnName() {
+		return field.getAnnotation(Id.class).columnName();
 	}
+	public Object getValue() {
+		
+		try {
+			Class<?> clazz = field.getDeclaringClass();
+			
+			Object value = field.get(clazz.newInstance());
+			return value;
+		} catch (IllegalArgumentException | SecurityException | IllegalAccessException | InstantiationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return 0;
+		
 	
+	}
 	
 	
 }

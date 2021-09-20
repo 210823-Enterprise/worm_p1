@@ -8,13 +8,16 @@ import java.util.List;
 import com.revature.annotations.Column;
 import com.revature.annotations.Entity;
 import com.revature.annotations.Id;
+
 import com.revature.annotations.Table;
+
 
 public class MetaModel<T> {
 	
 	private Class<T> clazz;
 	private IdField primarykeyField;
 	private List<ColumnField> columnFields;
+	
 	// private List<ForeignKeyField> foreignKeyFields
 	private TableField tableField;
 	private String entityName;
@@ -79,6 +82,19 @@ public class MetaModel<T> {
 			entityName = name.tableName();
 		}
 
+
+	public IdField getIdField() {
+		
+Field[] fields = clazz.getDeclaredFields();
+		for (Field field : fields) {
+			Id Id = field.getAnnotation(Id.class);
+			
+			if (Id != null) {
+				return new IdField(field);
+			}
+		}
+		
+
 		return name;
 	}
 
@@ -93,10 +109,13 @@ public class MetaModel<T> {
 				primarykeyField = new IdField(field);
 			}
 		}
+
 		
 		return primarykeyField;
 	}
 	
-	// public List<ForeignKeyField 
-	
+	public String getTableName()
+	{
+		return clazz.getAnnotation(Entity.class).tableName();
+	}
 }

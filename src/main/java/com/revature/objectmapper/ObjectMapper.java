@@ -12,6 +12,7 @@ public abstract class ObjectMapper {
 	protected void setStatement(PreparedStatement pstmt, ParameterMetaData pd, Method getter, Object obj, int index) {
 		
 		try {
+			
 			setPreparedStatementByType(pstmt, pd.getParameterTypeName(index), String.valueOf(getter.invoke(obj)), index);
 		} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | SQLException e) {
 		
@@ -32,6 +33,7 @@ public abstract class ObjectMapper {
 
 		// find some way to evalutate the Java type of the type param
 		try {
+			System.out.println(type+" "+input+" "+index);
 			switch (type) {
 			case "text":
 			case "String":
@@ -44,6 +46,18 @@ public abstract class ObjectMapper {
 			case "double":
 				pstmt.setDouble(index, Double.parseDouble(input));
 				break;
+			case "float":
+				pstmt.setFloat(index, Float.parseFloat(input));
+				break;
+			case "long":
+				pstmt.setLong(index, Long.parseLong(input));
+				break;
+			case "boolean":
+				pstmt.setBoolean(index, Boolean.parseBoolean(input));
+				break;
+			case "short":
+				pstmt.setShort(index, Short.parseShort(input));
+				break;
 				// timestamp, float, etc...
 			}
 		} catch (SQLException e) {
@@ -53,4 +67,34 @@ public abstract class ObjectMapper {
 
 	}
 
+	
+	public String getRDBDataType(String s)
+	{
+		switch (s) {
+		case "String":
+			  return "VARCHAR";
+		case "int":
+			return "INTEGER";
+			
+		case "double":
+			return "DOUBLE";
+			
+		case "float":
+			return "FLOAT";
+			
+		case "long":
+			return "BIGINT";
+			
+		case "boolean":
+			return "BOOL";
+			
+		case "short":
+			return "SMALLINT";
+			
+		default:
+			return "varchar";
+			// timestamp, float, etc...
+		}
+	}
+	
 }

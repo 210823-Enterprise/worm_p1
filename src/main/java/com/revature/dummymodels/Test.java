@@ -7,12 +7,15 @@ import com.revature.annotations.Id;
 @Entity(tableName="test_table")
 public class Test {
 	
-	@Id(value = "test_id")
-	private int id;
+	@Id(columnName="Id" )
+	public int id = 10;
 	
-	@Column(columnName="test_username")
-	private String testUsername;
+	@Column(columnName="USERname")
+	public String testUsername = "USer";
 	
-	@Column(columnName="test_password")
-	private String testPass;
+	@Column(columnName="PassWORD")
+	public String testPass = "Pass";
+	
+	
+
 }
