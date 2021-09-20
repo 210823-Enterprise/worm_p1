@@ -75,13 +75,14 @@ public class MetaModel<T> {
 		
 	}
 	
-	public Entity getTableName() {
-		Entity name = clazz.getAnnotation(Entity.class);
+	public String getTableName() {
+		String name = clazz.getAnnotation(Entity.class).tableName();
 		
 		if (name != null) {
-			entityName = name.tableName();
+			return name;
 		}
-
+		return null;
+	}
 
 	public IdField getIdField() {
 		
@@ -95,7 +96,7 @@ Field[] fields = clazz.getDeclaredFields();
 		}
 		
 
-		return name;
+		return null;
 	}
 
 	public IdField getPrimaryKey() {
@@ -114,8 +115,5 @@ Field[] fields = clazz.getDeclaredFields();
 		return primarykeyField;
 	}
 	
-	public String getTableName()
-	{
-		return clazz.getAnnotation(Entity.class).tableName();
-	}
+	
 }
