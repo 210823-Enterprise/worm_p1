@@ -40,13 +40,12 @@ public class ColumnField {
 	public String getColumnName() {
 		return field.getAnnotation(Column.class).columnName();
 	}
-public Object getValue() {
+public Object getValue(Object obj) {
 	try {
-		Class<?> clazz = field.getDeclaringClass();
 		
-		Object value = field.get(clazz.newInstance());
+		Object value = field.get(obj);
 		return value;
-	} catch (IllegalArgumentException | SecurityException | IllegalAccessException | InstantiationException e) {
+	} catch (IllegalArgumentException | SecurityException | IllegalAccessException e) {
 		// TODO Auto-generated catch block
 		e.printStackTrace();
 	}
