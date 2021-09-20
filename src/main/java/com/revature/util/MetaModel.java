@@ -9,13 +9,18 @@ import com.revature.annotations.Column;
 import com.revature.annotations.Entity;
 import com.revature.annotations.Id;
 
+import com.revature.annotations.Table;
+
+
 public class MetaModel<T> {
 	
 	private Class<T> clazz;
-	// private IdField primarykeyField
+	private IdField primarykeyField;
 	private List<ColumnField> columnFields;
 	
 	// private List<ForeignKeyField> foreignKeyFields
+	private TableField tableField;
+	private String entityName;
 	
 	// MetaModel Constructor here
 	
@@ -34,6 +39,7 @@ public class MetaModel<T> {
 	public MetaModel(Class<T> clazz) {
 		this.clazz = clazz;
 		this.columnFields = new LinkedList<>();
+		this.tableField = null;
 		
 	}
 	
@@ -68,6 +74,14 @@ public class MetaModel<T> {
 		return columnFields;
 		
 	}
+	
+	public Entity getTableName() {
+		Entity name = clazz.getAnnotation(Entity.class);
+		
+		if (name != null) {
+			entityName = name.tableName();
+		}
+
 
 	public IdField getIdField() {
 		
@@ -80,8 +94,24 @@ Field[] fields = clazz.getDeclaredFields();
 			}
 		}
 		
+
+		return name;
+	}
+
+	public IdField getPrimaryKey() {
 		
-		return null;
+		Field[] fields = clazz.getDeclaredFields();
+		
+		for (Field field : fields) {
+			Id id = field.getAnnotation(Id.class);
+			
+			if (id != null) {
+				primarykeyField = new IdField(field);
+			}
+		}
+
+		
+		return primarykeyField;
 	}
 	
 	public String getTableName()
