@@ -1,12 +1,13 @@
 package com.revature.objectmapper;
 
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.sql.Connection;
-
-import java.sql.SQLException;
+import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.List;
-
-import com.revature.annotations.Entity;
+import java.util.Properties;
 import com.revature.util.ColumnField;
 import com.revature.util.IdField;
 import com.revature.util.MetaModel;
@@ -14,7 +15,16 @@ import com.revature.util.MetaModel;
 public class ObjectSaver extends ObjectMapper{
 	
 	public boolean addObjectToDb(Object obj, Connection conn) {
-
+		Properties props = new Properties();
+		try {
+			props.load(new FileReader("src/main/resources/application.properties"));
+		} catch (FileNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		MetaModel<?> model = MetaModel.of(obj.getClass()); // use this to creaet an instance of the object
 		System.out.println(model.toString());
 		IdField Pk = model.getIdField();
@@ -24,15 +34,15 @@ public class ObjectSaver extends ObjectMapper{
 		
 		boolean Update = false;
 		
-		String check = "SELECT * FROM erickj."+model.getTableName()+" WHERE "+Pk.getColumnName()+" = "+Pk.getValue();
+		String check = "SELECT * FROM "+props.getProperty("DBschema")+"."+model.getTableName()+" WHERE "+Pk.getColumnName()+" = "+Pk.getValue();
 				     
-		
 		try {
-			stmt = conn.createStatement();
-		
-	       
-		if (stmt.execute(check)) 
+			stmt = conn.createStatement(); 
+			stmt.execute(check); 
+			ResultSet rs = stmt.getResultSet();
+		if (rs.next()) 
 		  {
+			System.out.println("found "+rs.next());
 			System.out.println("Record Already Exists");
 			Update = true;
 		  }
@@ -43,14 +53,10 @@ public class ObjectSaver extends ObjectMapper{
 		}
 		} catch (Exception e) {
 			System.out.println("New Record Detected , Creating new table.");
-		}
-		
-		
-
-		
+		}	
 		List<ColumnField> Cols = model.getColumns();
 if(Update == false)
-{		String sql = "CREATE TABLE IF NOT EXISTS erickj."+model.getTableName()+" ("+Pk.getColumnName()+" "+Pk.getType()+" ,";
+{		String sql = "CREATE TABLE IF NOT EXISTS "+props.getProperty("DBschema")+"."+model.getTableName()+" ("+Pk.getColumnName()+" "+Pk.getType()+" ,";
 		try
 		{
 			   for(int i =0; i < Cols.size(); i++)
@@ -85,7 +91,7 @@ if(Update == false)
 		
 		try
 		{
-		String sql2 = "INSERT INTO erickj."+model.getTableName()+" ( id , ";
+		String sql2 = "INSERT INTO "+props.getProperty("DBschema")+"."+model.getTableName()+" ( id , ";
 		
 		       for(int i =0; i < Cols.size(); i++)
 		        {
@@ -125,6 +131,7 @@ if(Update == false)
 					  {
 						System.out.println("Successfully Inserted!");
 						return true;
+						
 					  }
 		}
 		catch(Exception e)
@@ -135,9 +142,10 @@ if(Update == false)
 }
 else
 {
+	Update = false;
 		try
 		{
-          String sql3 = "Update erickj."+model.getTableName()+" SET ";
+          String sql3 = "Update "+props.getProperty("DBschema")+"."+model.getTableName()+" SET ";
 
        for(int i =0; i < Cols.size(); i++)
         {
@@ -188,5 +196,4 @@ catch(Exception e)
 	
 	
  }	
-
 }
