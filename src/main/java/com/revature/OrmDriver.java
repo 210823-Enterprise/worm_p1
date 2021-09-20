@@ -25,8 +25,14 @@ public class OrmDriver {
 				
 			ObjectRemover objR = new ObjectRemover();
 			ObjectSaver objS =  new ObjectSaver();
-			
-			objS.addObjectToDb(new Test(), conn);
+			Test something = new Test();
+			Test something2 = new Test();
+			// change it however you want 
+			something.id = 1000;
+			something2.testPass = "Some PassWord";
+			something2.testUsername = "Some username";
+			objS.addObjectToDb(something, conn);
+			objS.addObjectToDb(something2, conn);
 			//objR.removeObjectFromDb(new Test(), conn);
 			
 		

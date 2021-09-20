@@ -14,6 +14,18 @@ import com.revature.util.MetaModel;
 
 public class ObjectSaver extends ObjectMapper{
 	
+	
+	
+	public ObjectSaver()
+	{
+		super();
+	}
+	
+	
+	
+	
+	
+	
 	public boolean addObjectToDb(Object obj, Connection conn) {
 		Properties props = new Properties();
 		try {
@@ -29,12 +41,12 @@ public class ObjectSaver extends ObjectMapper{
 		System.out.println(model.toString());
 		IdField Pk = model.getIdField();
 		
-		System.out.println(Pk.getName()+" , "+Pk.getType()+" , "+Pk.getColumnName()+" , "+Pk.getValue());
+		System.out.println(Pk.getName()+" , "+Pk.getType()+" , "+Pk.getColumnName()+" , "+Pk.getValue(obj));
 		Statement stmt;
 		
 		boolean Update = false;
 		
-		String check = "SELECT * FROM "+props.getProperty("DBschema")+"."+model.getTableName()+" WHERE "+Pk.getColumnName()+" = "+Pk.getValue();
+		String check = "SELECT * FROM "+props.getProperty("DBschema")+"."+model.getTableName()+" WHERE "+Pk.getColumnName()+" = "+Pk.getValue(obj);
 				     
 		try {
 			stmt = conn.createStatement(); 
@@ -107,18 +119,18 @@ if(Update == false)
 		        }
 		
 		
-				sql2 += " VALUES("+Pk.getValue()+" , ";
+				sql2 += " VALUES("+Pk.getValue(obj)+" , ";
 				
 				for(int i =0; i < Cols.size(); i++)
 		        {
 		    	   System.out.println(Cols.size()+ "   "+ i);
 				   if(i < Cols.size() -1)
 				   {
-				      sql2 += "'"+Cols.get(i).getValue()+"' , ";
+				      sql2 += "'"+Cols.get(i).getValue(obj)+"' , ";
 				   }
 				   else
 				   {
-					   sql2 += "'"+Cols.get(i).getValue()+"' )";
+					   sql2 += "'"+Cols.get(i).getValue(obj)+"' )";
 				   }
 		        }
 				
@@ -152,15 +164,15 @@ else
     	   System.out.println(Cols.size()+ "   "+ i);
 		   if(i < Cols.size() -1)
 		   {
-		      sql3 += Cols.get(i).getColumnName()+" = '"+Cols.get(i).getValue() +"' , ";
+		      sql3 += Cols.get(i).getColumnName()+" = '"+Cols.get(i).getValue(obj) +"' , ";
 		   }
 		   else
 		   {
-			   sql3 += Cols.get(i).getColumnName()+" = '"+Cols.get(i).getValue() +"'  ";
+			   sql3 += Cols.get(i).getColumnName()+" = '"+Cols.get(i).getValue(obj) +"'  ";
 		   }
         }
 
-	sql3 += " WHERE id ='"+Pk.getValue()+"';";	
+	sql3 += " WHERE id ='"+Pk.getValue(obj)+"';";	
 	
 		System.out.println(sql3);
 		   
