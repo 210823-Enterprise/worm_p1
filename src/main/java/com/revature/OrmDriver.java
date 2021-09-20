@@ -27,7 +27,7 @@ public class OrmDriver {
 			ObjectSaver objS =  new ObjectSaver();
 			
 			objS.addObjectToDb(new Test(), conn);
-			objR.removeObjectFromDb(new Test(), conn);
+			//objR.removeObjectFromDb(new Test(), conn);
 			
 		
 		}

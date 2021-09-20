@@ -19,12 +19,12 @@ public class ObjectSaver extends ObjectMapper{
 		System.out.println(model.toString());
 		IdField Pk = model.getIdField();
 		
-		System.out.println(Pk.getName()+" , "+Pk.getType()+" , "+Pk.getValue());
+		System.out.println(Pk.getName()+" , "+Pk.getType()+" , "+Pk.getColumnName()+" , "+Pk.getValue());
 		Statement stmt;
 		
 		boolean Update = false;
 		
-		String check = "SELECT * FROM erickj."+model.getTableName()+" WHERE "+Pk.getName()+" = "+Pk.getValue();
+		String check = "SELECT * FROM erickj."+model.getTableName()+" WHERE "+Pk.getColumnName()+" = "+Pk.getValue();
 				     
 		
 		try {
@@ -50,7 +50,7 @@ public class ObjectSaver extends ObjectMapper{
 		
 		List<ColumnField> Cols = model.getColumns();
 if(Update == false)
-{		String sql = "CREATE TABLE IF NOT EXISTS erickj."+model.getTableName()+" ( id INTEGER , ";
+{		String sql = "CREATE TABLE IF NOT EXISTS erickj."+model.getTableName()+" ("+Pk.getColumnName()+" "+Pk.getType()+" ,";
 		try
 		{
 			   for(int i =0; i < Cols.size(); i++)
@@ -58,11 +58,11 @@ if(Update == false)
 				   System.out.println(Cols.size()+ "   "+ i);
 				   if(i < Cols.size() -1)
 				   {
-				      sql += Cols.get(i).getName()+" "+getRDBDataType(Cols.get(i).getStringType())+" , ";
+				      sql += Cols.get(i).getColumnName()+" "+getRDBDataType(Cols.get(i).getStringType())+" , ";
 				   }
 				   else
 				   {
-					   sql += Cols.get(i).getName()+" "+getRDBDataType(Cols.get(i).getStringType())+" )";
+					   sql += Cols.get(i).getColumnName()+" "+getRDBDataType(Cols.get(i).getStringType())+" )";
 				   }
 			   }
 			   System.out.println(sql);
@@ -85,34 +85,34 @@ if(Update == false)
 		
 		try
 		{
-		String sql2 = "INSERT INTO erickj."+model.getTableName()+"( id , ";
+		String sql2 = "INSERT INTO erickj."+model.getTableName()+" ( id , ";
 		
 		       for(int i =0; i < Cols.size(); i++)
 		        {
 		    	   System.out.println(Cols.size()+ "   "+ i);
 				   if(i < Cols.size() -1)
 				   {
-				      sql2 += Cols.get(i).getName()+" , ";
+				      sql2 += Cols.get(i).getColumnName()+" , ";
 				   }
 				   else
 				   {
-					   sql2 += Cols.get(i).getName()+" )";
+					   sql2 += Cols.get(i).getColumnName()+" )";
 				   }
 		        }
 		
 		
-				sql2 += " VALUES('"+Pk.getValue()+"' , ";
+				sql2 += " VALUES("+Pk.getValue()+" , ";
 				
 				for(int i =0; i < Cols.size(); i++)
 		        {
 		    	   System.out.println(Cols.size()+ "   "+ i);
 				   if(i < Cols.size() -1)
 				   {
-				      sql2 += "'"+Cols.get(i).getColumnName()+"' , ";
+				      sql2 += "'"+Cols.get(i).getValue()+"' , ";
 				   }
 				   else
 				   {
-					   sql2 += "'"+Cols.get(i).getColumnName()+"' )";
+					   sql2 += "'"+Cols.get(i).getValue()+"' )";
 				   }
 		        }
 				
@@ -144,11 +144,11 @@ else
     	   System.out.println(Cols.size()+ "   "+ i);
 		   if(i < Cols.size() -1)
 		   {
-		      sql3 += Cols.get(i).getName()+" = '"+Cols.get(i).getColumnName() +"' , ";
+		      sql3 += Cols.get(i).getColumnName()+" = '"+Cols.get(i).getValue() +"' , ";
 		   }
 		   else
 		   {
-			   sql3 += Cols.get(i).getName()+" = '"+Cols.get(i).getColumnName() +"'  ";
+			   sql3 += Cols.get(i).getColumnName()+" = '"+Cols.get(i).getValue() +"'  ";
 		   }
         }
 

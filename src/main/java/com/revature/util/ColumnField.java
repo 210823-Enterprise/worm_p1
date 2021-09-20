@@ -40,7 +40,22 @@ public class ColumnField {
 	public String getColumnName() {
 		return field.getAnnotation(Column.class).columnName();
 	}
+public Object getValue() {
+	try {
+		Class<?> clazz = field.getDeclaringClass();
+		
+		Object value = field.get(clazz.newInstance());
+		return value;
+	} catch (IllegalArgumentException | SecurityException | IllegalAccessException | InstantiationException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	return 0;
 	
+	
+		
+	
+	}
 	
 }
 

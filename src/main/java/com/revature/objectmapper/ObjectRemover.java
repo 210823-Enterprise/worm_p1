@@ -18,7 +18,7 @@ public class ObjectRemover extends ObjectMapper{
 		MetaModel<?> model = MetaModel.of(obj.getClass()); // use this to creaet an instance of the object
 		
 		IdField Pk = model.getIdField();
-		String sql  = "DELETE FROM erickj." + model.getTableName() + " WHERE EXISTS (SELECT * FROM erickj."+model.getTableName()+" WHERE "+Pk.getName()+" = "+Pk.getValue()+")";
+		String sql  = "DELETE FROM erickj." + model.getTableName() + " WHERE EXISTS (SELECT * FROM erickj."+model.getTableName()+" WHERE "+Pk.getName()+" = "+Pk.getColumnName()+")";
 		// create some type of method that returns the table name in MetaModel;
 		Statement pstmt;
 		try {
