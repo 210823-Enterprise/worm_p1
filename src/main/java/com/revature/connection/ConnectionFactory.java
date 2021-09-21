@@ -29,11 +29,12 @@ public class ConnectionFactory
 	
 	private ConnectionFactory() 
 	{
-		
+		ClassLoader classLoader = getClass().getClassLoader();
+		Properties props = new Properties();
 		try 
 		{
-			Properties props = new Properties();
-			props.load(new FileReader("src/main/resources/application.properties"));
+			
+			props.load(new FileReader(classLoader.getResource("application.properties").getFile()));
 			ds = new BasicDataSource();
 			ds.setUrl(props.getProperty("url"));
 			ds.setUsername(props.getProperty("username"));

@@ -18,7 +18,7 @@ private Field field;
 		}
 		
 		this.field = field;
-		System.out.println(field.getModifiers());
+		
 	}
 	
 	public String getName() {

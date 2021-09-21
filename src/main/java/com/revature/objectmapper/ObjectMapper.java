@@ -33,7 +33,7 @@ public abstract class ObjectMapper {
 
 		// find some way to evalutate the Java type of the type param
 		try {
-			System.out.println(type+" "+input+" "+index);
+			
 			switch (type) {
 			case "text":
 			case "String":
