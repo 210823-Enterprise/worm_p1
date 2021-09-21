@@ -36,11 +36,11 @@ public class OrmDriver {
 			something2.testPass = "Some PassWord";
 			something2.testUsername = "Some username";
 			
-			objR.removeObjectFromDb(something, conn);
+			//objR.removeObjectFromDb(something, conn);
 			//objR.removeObjectFromDb(something2, conn);
 			
 		
-    		//objS.addObjectToDb(something, conn);
+    		objS.addObjectToDb(something, conn);
 			//objS.addObjectToDb(something2, conn);
 			
 			

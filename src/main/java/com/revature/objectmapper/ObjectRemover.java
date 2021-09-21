@@ -17,12 +17,24 @@ import com.revature.util.IdField;
 import com.revature.util.MetaModel;
 
 public class ObjectRemover extends ObjectMapper{
+	
+	
+	public ObjectRemover()
+	{
+		super();
+	}
+	
+	ClassLoader classLoader = getClass().getClassLoader();
 	Properties props = new Properties();
+	
 	public boolean removeObjectFromDb(Object obj, Connection conn) {
 		
 		
+		
+		
+		
 		try {
-			props.load(new FileReader("src/main/resources/application.properties"));
+			props.load(new FileReader(classLoader.getResource("application.properties").getFile()));
 		} catch (FileNotFoundException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
