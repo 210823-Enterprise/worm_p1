@@ -5,9 +5,11 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
 import java.util.Properties;
+
 import com.revature.util.ColumnField;
 import com.revature.util.IdField;
 import com.revature.util.MetaModel;
@@ -15,14 +17,15 @@ import com.revature.util.MetaModel;
 public class ObjectSaver extends ObjectMapper{
 	
 	
-	
+	 
+	 
 	public ObjectSaver()
 	{
 		super();
 	}
 	
 	
-	
+
 	
 	
 	
@@ -38,11 +41,8 @@ public class ObjectSaver extends ObjectMapper{
 			e1.printStackTrace();
 		}
 		MetaModel<?> model = MetaModel.of(obj.getClass()); // use this to creaet an instance of the object
-		System.out.println(model.toString());
 		IdField Pk = model.getIdField();
-		
-		System.out.println(Pk.getName()+" , "+Pk.getType()+" , "+Pk.getColumnName()+" , "+Pk.getValue(obj));
-		Statement stmt;
+		Statement stmt = null;
 		
 		boolean Update = false;
 		
@@ -54,17 +54,17 @@ public class ObjectSaver extends ObjectMapper{
 			ResultSet rs = stmt.getResultSet();
 		if (rs.next()) 
 		  {
-			System.out.println("found "+rs.next());
-			System.out.println("Record Already Exists");
+			
+			//log.info("This Object Already Exists in the Database. Updating...");
 			Update = true;
 		  }
 		else
 		{
-			System.out.println("New Record ");
+			//log.info(model.getTableName()+" "+model.getIdField().getValue(obj)+" is being put in the Table : "+model.getTableName()+" That already exists in database.");
 			Update = false;
 		}
 		} catch (Exception e) {
-			System.out.println("New Record Detected , Creating new table.");
+			//log.info("The Table "+model.getTableName()+" Already exists , "+model.getTableName()+" "+model.getIdField().getValue(obj)+" Is being Inserted.");
 		}	
 		List<ColumnField> Cols = model.getColumns();
 if(Update == false)
@@ -73,7 +73,7 @@ if(Update == false)
 		{
 			   for(int i =0; i < Cols.size(); i++)
 			   {
-				   System.out.println(Cols.size()+ "   "+ i);
+				  
 				   if(i < Cols.size() -1)
 				   {
 				      sql += Cols.get(i).getColumnName()+" "+getRDBDataType(Cols.get(i).getStringType())+" , ";
@@ -83,13 +83,13 @@ if(Update == false)
 					   sql += Cols.get(i).getColumnName()+" "+getRDBDataType(Cols.get(i).getStringType())+" )";
 				   }
 			   }
-			   System.out.println(sql);
+			  
 			   
 			    stmt  = conn.createStatement();
 		       
 				if (stmt.execute(sql)) 
 				  {
-					System.out.println("Table Created ,Success!");
+					//log.info("New Table created successfully.");
 					
 				  }
 			   
@@ -107,7 +107,7 @@ if(Update == false)
 		
 		       for(int i =0; i < Cols.size(); i++)
 		        {
-		    	   System.out.println(Cols.size()+ "   "+ i);
+		    	  
 				   if(i < Cols.size() -1)
 				   {
 				      sql2 += Cols.get(i).getColumnName()+" , ";
@@ -123,7 +123,7 @@ if(Update == false)
 				
 				for(int i =0; i < Cols.size(); i++)
 		        {
-		    	   System.out.println(Cols.size()+ "   "+ i);
+		    	  
 				   if(i < Cols.size() -1)
 				   {
 				      sql2 += "'"+Cols.get(i).getValue(obj)+"' , ";
@@ -133,15 +133,12 @@ if(Update == false)
 					   sql2 += "'"+Cols.get(i).getValue(obj)+"' )";
 				   }
 		        }
-				
-			
-				System.out.println(sql2);
 				   
 				   stmt  = conn.createStatement();
 			       
 					if (stmt.execute(sql2)) 
 					  {
-						System.out.println("Successfully Inserted!");
+						//log.info(model.getTableName()+" "+model.getIdField().getValue(obj)+" Inserted successfully.");
 						return true;
 						
 					  }
@@ -161,7 +158,7 @@ else
 
        for(int i =0; i < Cols.size(); i++)
         {
-    	   System.out.println(Cols.size()+ "   "+ i);
+    	  
 		   if(i < Cols.size() -1)
 		   {
 		      sql3 += Cols.get(i).getColumnName()+" = '"+Cols.get(i).getValue(obj) +"' , ";
@@ -174,13 +171,12 @@ else
 
 	sql3 += " WHERE id ='"+Pk.getValue(obj)+"';";	
 	
-		System.out.println(sql3);
 		   
 		   stmt  = conn.createStatement();
 	       
 			if (stmt.execute(sql3)) 
 			  {
-				System.out.println("Successfully Updated!");
+				//log.info(model.getTableName()+" "+model.getIdField().getValue(obj));
 				return true;
 			  }
 }
@@ -201,11 +197,17 @@ catch(Exception e)
 		// then call acustom setStatement method
 		
 		
-		
+		try {
+			stmt.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}	
 	return false;
 		
 	}
 	
 	
  }	
+	
 }

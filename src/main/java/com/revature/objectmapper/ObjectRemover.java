@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.ParameterMetaData;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.HashSet;
@@ -16,10 +17,10 @@ import com.revature.util.IdField;
 import com.revature.util.MetaModel;
 
 public class ObjectRemover extends ObjectMapper{
-	
+	Properties props = new Properties();
 	public boolean removeObjectFromDb(Object obj, Connection conn) {
 		
-		Properties props = new Properties();
+		
 		try {
 			props.load(new FileReader("src/main/resources/application.properties"));
 		} catch (FileNotFoundException e1) {
@@ -30,40 +31,73 @@ public class ObjectRemover extends ObjectMapper{
 			e1.printStackTrace();
 		}
 		
-		MetaModel<?> model = MetaModel.of(obj.getClass()); // use this to creaet an instance of the object
-		
+		MetaModel<?> model = MetaModel.of(obj.getClass()); 
 		IdField Pk = model.getIdField();
-		String sql  = "DELETE FROM "+props.getProperty("DBschema")+"."+ model.getTableName() + " WHERE EXISTS (SELECT * FROM erickj."+model.getTableName()+" WHERE "+Pk.getName()+" = "+Pk.getColumnName()+")";
-		// create some type of method that returns the table name in MetaModel;
+		Statement stmt = null;
+		
+		
+		
+		String sql  = "DELETE FROM "+props.getProperty("DBschema")+"."+ model.getTableName() +" WHERE id = '"+Pk.getValue(obj)+"'";
+		System.out.println(sql);
 		Statement pstmt;
 		try {
 			pstmt = conn.createStatement();
 			pstmt.execute(sql);
-			return true;
+			
 		} catch (SQLException e) {
 			// add an exception here
 			e.printStackTrace();
 		}
-		// we want to grab meta data from this statement
-		
-		
-		// instead of Method, maybe pass in a hashmap containing info about the object that you
-		
-		
-		//ObjectCache class...
-		
-		
-		
-		
-		// then call acustom setStatement method
-		
-		
-		
+	
+
+		String sql2 = "SELECT * FROM "+props.getProperty("DBschema")+"."+model.getTableName();
+	     
+		try {
+			stmt = conn.createStatement(); 
+			stmt.execute(sql2); 
+			ResultSet rs = stmt.getResultSet();
+			
+		if (rs.next())
+		  {
+			System.out.println("Table not empty");
+			//log.info("Table still contains objects.");
+			return true;
+		  }
+		else
+		{
+			System.out.println("Table empty");
+			//log.info("Table is empty Deleting Table");
+			deleteTable(conn , model);
+			return false;
+		}
+		} catch (Exception e) {
+			//log.info("Something went wrong when checking the Table with Objectremover()");
+		}
 		return false;
+		
+		
+			
 		
 	}
 	
-	
+	public void deleteTable(Connection conn , MetaModel<?> model )
+	{
+		
+		
+	  	String sql = "DROP TABLE IF EXISTS "+props.getProperty("DBschema")+"."+model.getTableName();
+		System.out.println(sql);
+		Statement stmt = null;
+		
+		try {
+			stmt = conn.createStatement();
+			stmt.execute(sql);
+		}
+		catch (SQLException e) 
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 	
 
 }
