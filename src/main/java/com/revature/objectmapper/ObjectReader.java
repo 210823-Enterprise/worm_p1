@@ -3,14 +3,15 @@ package com.revature.objectmapper;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.sql.Connection;
-import java.sql.ParameterMetaData;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.HashSet;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Properties;
 
 import com.revature.util.ColumnField;
@@ -28,7 +29,7 @@ public class ObjectReader extends ObjectMapper {
 
 	public List<Object> getObjectsFromDB(Object obj, Connection conn) {
 
-		List<Object> terminal;
+		List<Object> terminal = new ArrayList<Object>();
 
 		try {
 			props.load(new FileReader(classLoader.getResource("application.properties").getFile()));
@@ -55,22 +56,63 @@ public class ObjectReader extends ObjectMapper {
 			rs = pstmt.executeQuery(sql);
 
 			List<ColumnField> Cols = model.getColumns();
+			System.out.println(model.getSimpleClassName());
+			//instantiate this object
+			//model.getSimpleClassName() instance; 
+			
+			
+			/*try {
+				Object object = obj.getClass().forName(model.getSimpleClassName()).getConstructor(null);
+			} catch (ClassNotFoundException | NoSuchMethodException | SecurityException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}*/
 
+			String inputParam = "";
+			
 			while (rs.next()) {
 				int id = rs.getInt("id");
+				inputParam += id;
+				System.out.println("id: " + id);
 				for (int i = 0; i < Cols.size(); i++) {
 
 					if (i < Cols.size()) {
-						System.out.println(Cols.get(i).getStringType());
-						if (Cols.get(i).getStringType() == "String") {
-							rs.getString(Cols.get(i).getColumnName());
+						String columnSwitch = Cols.get(i).getStringType();
+						
+						switch(columnSwitch) {
+						
+						case "String":
+							System.out.println(rs.getString(Cols.get(i).getColumnName()));
+							break;
+						case "int":
+							System.out.println(rs.getInt(Cols.get(i).getColumnName()));
+							break;
+						default:
+							break;
 						}
-						System.out.println(Cols.get(i).getColumnName());
+
 					}
 				}
+				System.out.println("---------------");
 			}
+			
+			
+			Class<?> c = Class.forName(model.getClassName());
 
-		} catch (SQLException e) {
+			Constructor<?> cons = c.getDeclaredConstructor();
+			Object object = cons.newInstance();
+			Object object2 = cons.newInstance();
+			terminal.add(object);
+			terminal.add(object2);
+			
+			for (Object objs : terminal) {
+				System.out.println(objs.getClass());
+				
+			}
+			
+			return terminal;
+
+		} catch (SQLException | ClassNotFoundException | NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
 			// add an exception here
 			e.printStackTrace();
 		}

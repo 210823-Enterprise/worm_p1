@@ -18,5 +18,26 @@ public class Goblin {
 	
 	@Column(columnName="weapon")
 	public String weapon;
+
+	public Goblin(int id, String goblinName, int powerLevel, String weapon) {
+		super();
+		this.id = id;
+		this.goblinName = goblinName;
+		this.powerLevel = powerLevel;
+		this.weapon = weapon;
+	}
+
+	public Goblin() {
+		super();
+		this.id = 10;
+		this.goblinName = "Stumpy";
+		this.powerLevel = 1;
+		this.weapon = "borken stick";
+	}
+	
+	public void Roar() {
+		System.out.println("RAAAAAAAAAWR");
+	}
+	
 	
 }

@@ -28,11 +28,20 @@ public class OrmDriver {
 		// readable by our framework
 		// let's iterate over all meta models that exist in the config object
 
+		ObjectSaver objS = new ObjectSaver();
 		ObjectRemover objR = new ObjectRemover();
 		ObjectReader objRe = new ObjectReader();
 		
-		//Goblin gob = new Goblin();
-		//objRe.getObjectsFromDB(gob, conn);
+		Goblin gob = new Goblin(1, "Gobby", 472, "Bow");
+		objS.addObjectToDb(gob, conn);
+		List<Goblin> gobLins =  (List<Goblin>) (Object) objRe.getObjectsFromDB(gob, conn);
+		
+		for (Goblin gobby : gobLins) {
+			System.out.println("------------------------------");
+			System.out.println(gobby.id + " - " + gobby.goblinName + " - " 
+			+ gobby.weapon + " - " + gobby.powerLevel);
+		}
+		System.out.println("------------------------------");
 
 		
 		
