@@ -53,11 +53,11 @@ public class ObjectReader extends ObjectMapper {
 
 			List<ColumnField> Cols = model.getColumns();
 
-			Object[] objz = new Object[Cols.size()+1];
-			Class<?>[] typz = new Class<?>[Cols.size()+1];
-			
+			Object[] objz = new Object[Cols.size() + 1];
+			Class<?>[] typz = new Class<?>[Cols.size() + 1];
+
 			while (rs.next()) {
-				objz = new Object[Cols.size()+1];
+				objz = new Object[Cols.size() + 1];
 				int id = rs.getInt("id");
 				objz[0] = id;
 				typz[0] = int.class;
@@ -66,16 +66,20 @@ public class ObjectReader extends ObjectMapper {
 
 					if (i < Cols.size()) {
 						String columnSwitch = Cols.get(i).getStringType();
-						
-						switch(columnSwitch) {
-						
+
+						switch (columnSwitch) {
+
 						case "String":
-							objz[i+1] = rs.getString(Cols.get(i).getColumnName());
-							typz[i+1] = String.class;
+							objz[i + 1] = rs.getString(Cols.get(i).getColumnName());
+							typz[i + 1] = String.class;
 							break;
 						case "int":
-							objz[i+1] = rs.getInt(Cols.get(i).getColumnName());
-							typz[i+1] = int.class;
+							objz[i + 1] = rs.getInt(Cols.get(i).getColumnName());
+							typz[i + 1] = int.class;
+							break;
+						case "boolean":
+							objz[i + 1] = rs.getBoolean(Cols.get(i).getColumnName());
+							typz[i + 1] = boolean.class;
 							break;
 						default:
 							break;
@@ -83,21 +87,23 @@ public class ObjectReader extends ObjectMapper {
 
 					}
 				}
-				
+
 				Class<?> c = Class.forName(model.getClassName());
 				Constructor<?> cons = c.getDeclaredConstructor(typz);
 				Object object = cons.newInstance(objz);
 				terminal.add(object);
-				
+
 			}
-			
+
 			return terminal;
 
-		} catch (SQLException | ClassNotFoundException | NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+		} catch (SQLException | ClassNotFoundException | NoSuchMethodException | SecurityException
+				| InstantiationException | IllegalAccessException | IllegalArgumentException
+				| InvocationTargetException e) {
 			// add an exception here
 			e.printStackTrace();
 		}
-		
+
 		return null;
 
 	}
