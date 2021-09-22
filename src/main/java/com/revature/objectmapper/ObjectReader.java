@@ -3,18 +3,17 @@ package com.revature.objectmapper;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.sql.Connection;
-import java.sql.ParameterMetaData;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.HashSet;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
 import com.revature.util.ColumnField;
-import com.revature.util.IdField;
 import com.revature.util.MetaModel;
 
 public class ObjectReader extends ObjectMapper {
@@ -28,7 +27,7 @@ public class ObjectReader extends ObjectMapper {
 
 	public List<Object> getObjectsFromDB(Object obj, Connection conn) {
 
-		List<Object> terminal;
+		List<Object> terminal = new ArrayList<Object>();
 
 		try {
 			props.load(new FileReader(classLoader.getResource("application.properties").getFile()));
@@ -41,11 +40,9 @@ public class ObjectReader extends ObjectMapper {
 		}
 
 		MetaModel<?> model = MetaModel.of(obj.getClass());
-		IdField Pk = model.getIdField();
 
 		String sql = "SELECT * FROM " + props.getProperty("DBschema") + "." + model.getTableName();
 
-		System.out.println(sql);
 		Statement pstmt = null;
 		try {
 			pstmt = conn.createStatement();
@@ -56,21 +53,47 @@ public class ObjectReader extends ObjectMapper {
 
 			List<ColumnField> Cols = model.getColumns();
 
+			Object[] objz = new Object[Cols.size()+1];
+			Class<?>[] typz = new Class<?>[Cols.size()+1];
+			
 			while (rs.next()) {
+				objz = new Object[Cols.size()+1];
 				int id = rs.getInt("id");
+				objz[0] = id;
+				typz[0] = int.class;
+
 				for (int i = 0; i < Cols.size(); i++) {
 
 					if (i < Cols.size()) {
-						System.out.println(Cols.get(i).getStringType());
-						if (Cols.get(i).getStringType() == "String") {
-							rs.getString(Cols.get(i).getColumnName());
+						String columnSwitch = Cols.get(i).getStringType();
+						
+						switch(columnSwitch) {
+						
+						case "String":
+							objz[i+1] = rs.getString(Cols.get(i).getColumnName());
+							typz[i+1] = String.class;
+							break;
+						case "int":
+							objz[i+1] = rs.getInt(Cols.get(i).getColumnName());
+							typz[i+1] = int.class;
+							break;
+						default:
+							break;
 						}
-						System.out.println(Cols.get(i).getColumnName());
+
 					}
 				}
+				
+				Class<?> c = Class.forName(model.getClassName());
+				Constructor<?> cons = c.getDeclaredConstructor(typz);
+				Object object = cons.newInstance(objz);
+				terminal.add(object);
+				
 			}
+			
+			return terminal;
 
-		} catch (SQLException e) {
+		} catch (SQLException | ClassNotFoundException | NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
 			// add an exception here
 			e.printStackTrace();
 		}
