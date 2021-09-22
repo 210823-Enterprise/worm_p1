@@ -43,7 +43,6 @@ public class ObjectReader extends ObjectMapper {
 
 		String sql = "SELECT * FROM " + props.getProperty("DBschema") + "." + model.getTableName();
 
-		System.out.println(sql);
 		Statement pstmt = null;
 		try {
 			pstmt = conn.createStatement();
@@ -53,8 +52,6 @@ public class ObjectReader extends ObjectMapper {
 			rs = pstmt.executeQuery(sql);
 
 			List<ColumnField> Cols = model.getColumns();
-			System.out.println(model.getSimpleClassName());
-
 
 			Object[] objz = new Object[Cols.size()+1];
 			Class<?>[] typz = new Class<?>[Cols.size()+1];
@@ -89,7 +86,6 @@ public class ObjectReader extends ObjectMapper {
 				
 				Class<?> c = Class.forName(model.getClassName());
 				Constructor<?> cons = c.getDeclaredConstructor(typz);
-				System.out.println("length: " + objz.length);
 				Object object = cons.newInstance(objz);
 				terminal.add(object);
 				
