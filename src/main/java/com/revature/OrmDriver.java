@@ -40,6 +40,7 @@ public class OrmDriver {
 		objS.addObjectToDb(gob3, conn);
 		
 		List<Goblin> gobLins =  (List<Goblin>) (Object) objRe.getObjectsFromDB(gob1, conn);
+		
 		System.out.println("");
 		for (Goblin gobby : gobLins) {
 			System.out.println("------------------------------");
