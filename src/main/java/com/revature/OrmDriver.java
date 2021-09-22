@@ -32,10 +32,14 @@ public class OrmDriver {
 		ObjectRemover objR = new ObjectRemover();
 		ObjectReader objRe = new ObjectReader();
 		
-		Goblin gob = new Goblin(1, "Gobby", 472, "Bow");
-		objS.addObjectToDb(gob, conn);
-		List<Goblin> gobLins =  (List<Goblin>) (Object) objRe.getObjectsFromDB(gob, conn);
-		
+		Goblin gob1 = new Goblin(1, "Gobby", 472, "Bow");
+		Goblin gob2 = new Goblin(2, "Gorm", 472, "Airplane");
+		Goblin gob3 = new Goblin(3, "Blank", 472, "Tazer");
+		objS.addObjectToDb(gob1, conn);
+		objS.addObjectToDb(gob2, conn);
+		objS.addObjectToDb(gob3, conn);
+		List<Goblin> gobLins =  (List<Goblin>) (Object) objRe.getObjectsFromDB(gob1, conn);
+		System.out.println("");
 		for (Goblin gobby : gobLins) {
 			System.out.println("------------------------------");
 			System.out.println(gobby.id + " - " + gobby.goblinName + " - " 

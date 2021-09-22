@@ -11,11 +11,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.Properties;
 
 import com.revature.util.ColumnField;
-import com.revature.util.IdField;
 import com.revature.util.MetaModel;
 
 public class ObjectReader extends ObjectMapper {
@@ -42,7 +40,6 @@ public class ObjectReader extends ObjectMapper {
 		}
 
 		MetaModel<?> model = MetaModel.of(obj.getClass());
-		IdField Pk = model.getIdField();
 
 		String sql = "SELECT * FROM " + props.getProperty("DBschema") + "." + model.getTableName();
 
@@ -57,23 +54,17 @@ public class ObjectReader extends ObjectMapper {
 
 			List<ColumnField> Cols = model.getColumns();
 			System.out.println(model.getSimpleClassName());
-			//instantiate this object
-			//model.getSimpleClassName() instance; 
-			
-			
-			/*try {
-				Object object = obj.getClass().forName(model.getSimpleClassName()).getConstructor(null);
-			} catch (ClassNotFoundException | NoSuchMethodException | SecurityException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}*/
 
-			String inputParam = "";
+
+			Object[] objz = new Object[Cols.size()+1];
+			Class<?>[] typz = new Class<?>[Cols.size()+1];
 			
 			while (rs.next()) {
+				objz = new Object[Cols.size()+1];
 				int id = rs.getInt("id");
-				inputParam += id;
-				System.out.println("id: " + id);
+				objz[0] = id;
+				typz[0] = int.class;
+
 				for (int i = 0; i < Cols.size(); i++) {
 
 					if (i < Cols.size()) {
@@ -82,10 +73,12 @@ public class ObjectReader extends ObjectMapper {
 						switch(columnSwitch) {
 						
 						case "String":
-							System.out.println(rs.getString(Cols.get(i).getColumnName()));
+							objz[i+1] = rs.getString(Cols.get(i).getColumnName());
+							typz[i+1] = String.class;
 							break;
 						case "int":
-							System.out.println(rs.getInt(Cols.get(i).getColumnName()));
+							objz[i+1] = rs.getInt(Cols.get(i).getColumnName());
+							typz[i+1] = int.class;
 							break;
 						default:
 							break;
@@ -93,20 +86,12 @@ public class ObjectReader extends ObjectMapper {
 
 					}
 				}
-				System.out.println("---------------");
-			}
-			
-			
-			Class<?> c = Class.forName(model.getClassName());
-
-			Constructor<?> cons = c.getDeclaredConstructor();
-			Object object = cons.newInstance();
-			Object object2 = cons.newInstance();
-			terminal.add(object);
-			terminal.add(object2);
-			
-			for (Object objs : terminal) {
-				System.out.println(objs.getClass());
+				
+				Class<?> c = Class.forName(model.getClassName());
+				Constructor<?> cons = c.getDeclaredConstructor(typz);
+				System.out.println("length: " + objz.length);
+				Object object = cons.newInstance(objz);
+				terminal.add(object);
 				
 			}
 			
