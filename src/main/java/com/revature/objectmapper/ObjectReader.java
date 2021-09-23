@@ -82,6 +82,8 @@ public class ObjectReader extends ObjectMapper {
 							typz[i + 1] = boolean.class;
 							break;
 						default:
+							objz[i + 1] = rs.getString(Cols.get(i).getColumnName());
+							typz[i + 1] = String.class;
 							break;
 						}
 
