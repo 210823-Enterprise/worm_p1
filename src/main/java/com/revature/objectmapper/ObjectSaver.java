@@ -49,7 +49,7 @@ public class ObjectSaver extends ObjectMapper{
 		
 		boolean Update = false;
 		
-		String check = "SELECT * FROM "+props.getProperty("DBschema")+"."+model.getTableName()+" WHERE "+Pk.getColumnName()+" = "+Pk.getValue(obj);
+		String check = "SELECT * FROM "+props.getProperty("DBschema")+"."+model.getTableName()+" WHERE "+Pk.getColumnName()+" = "+Pk.getValue(obj)+" ";
 				     
 		try {
 			stmt = conn.createStatement(); 
@@ -83,7 +83,7 @@ if(Update == false)
 				   }
 				   else
 				   {
-					   sql += Cols.get(i).getColumnName()+" "+getRDBDataType(Cols.get(i).getStringType())+" )";
+					   sql += Cols.get(i).getColumnName()+" "+getRDBDataType(Cols.get(i).getStringType())+" ) ";
 				   }
 			   }
 			  
@@ -106,7 +106,7 @@ if(Update == false)
 		
 		try
 		{
-		String sql2 = "INSERT INTO "+props.getProperty("DBschema")+"."+model.getTableName()+" ( id , ";
+		String sql2 = "BEGIN; INSERT INTO "+props.getProperty("DBschema")+"."+model.getTableName()+" ( id , ";
 		
 		       for(int i =0; i < Cols.size(); i++)
 		        {
@@ -133,7 +133,7 @@ if(Update == false)
 				   }
 				   else
 				   {
-					   sql2 += "'"+Cols.get(i).getValue(obj)+"' )";
+					   sql2 += "'"+Cols.get(i).getValue(obj)+"' ) ;COMMIT;";
 				   }
 		        }
 				   
@@ -157,7 +157,7 @@ else
 	Update = false;
 		try
 		{
-          String sql3 = "Update "+props.getProperty("DBschema")+"."+model.getTableName()+" SET ";
+          String sql3 = "BEGIN; Update "+props.getProperty("DBschema")+"."+model.getTableName()+" SET ";
 
        for(int i =0; i < Cols.size(); i++)
         {
@@ -172,34 +172,27 @@ else
 		   }
         }
 
-	sql3 += " WHERE id ='"+Pk.getValue(obj)+"';";	
+	sql3 += " WHERE id ='"+Pk.getValue(obj)+"'; COMMIT;";	
 	
 		   
 		   stmt  = conn.createStatement();
 	       
 			if (stmt.execute(sql3)) 
 			  {
+				stmt.close();
 				//log.info(model.getTableName()+" "+model.getIdField().getValue(obj));
 				return true;
 			  }
+			else
+			{
+				stmt.close();
+			}
 }
 catch(Exception e)
 {
+	
 	e.printStackTrace();
-}		// we want to grab meta data from this statement
-		
-		
-		// instead of Method, maybe pass in a hashmap containing info about the object that you
-		
-		
-		//ObjectCache class...
-		
-       
-		
-		
-		// then call acustom setStatement method
-		
-		
+}				
 		try {
 			stmt.close();
 		} catch (SQLException e) {
