@@ -26,6 +26,14 @@ public class Goblin {
 		this.powerLevel = powerLevel;
 		this.weapon = weapon;
 	}
+	
+	public Goblin(int id) {
+		super();
+		this.id = id;
+		this.goblinName = "Stumpy";
+		this.powerLevel = 1;
+		this.weapon = "borken stick";
+	}
 
 	public Goblin() {
 		super();
