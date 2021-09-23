@@ -52,8 +52,8 @@ Finally, inside your project structure you need a application.proprties file.
  (typically located src/main/resources/)
  ``` 
   url=path/to/database
-  admin-usr=username/of/database
-  admin-pw=password/of/database  
+  username=username/of/database
+  password=password/of/database  
   ```
   
 ## Usage  
