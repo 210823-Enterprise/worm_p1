@@ -1,0 +1,28 @@
+2021-09-26 19:12:12 INFO  com.revature.OrmDriver:41 - hi
+2021-09-26 19:13:16 INFO  revature.objectmapper.ObjectSaver:64 - This Object Already Exists in the Database. Updating...
+2021-09-26 19:13:16 INFO  revature.objectmapper.ObjectSaver:64 - This Object Already Exists in the Database. Updating...
+2021-09-26 19:13:16 INFO  revature.objectmapper.ObjectSaver:64 - This Object Already Exists in the Database. Updating...
+2021-09-26 19:13:39 INFO  revature.objectmapper.ObjectSaver:69 - goblin_table 6 is being put in the Table : goblin_table That already exists in database.
+2021-09-26 19:13:40 INFO  revature.objectmapper.ObjectSaver:69 - goblin_table 5 is being put in the Table : goblin_table That already exists in database.
+2021-09-26 19:13:40 INFO  revature.objectmapper.ObjectSaver:69 - goblin_table 4 is being put in the Table : goblin_table That already exists in database.
+2021-09-26 19:20:13 INFO  revature.objectmapper.ObjectRemover:61 - org.postgresql.jdbc.PgStatement@21a947fe
+2021-09-26 19:20:13 INFO  revature.objectmapper.ObjectRemover:78 - Table still contains objects.
+2021-09-26 19:20:13 INFO  revature.objectmapper.ObjectRemover:61 - org.postgresql.jdbc.PgStatement@453da22c
+2021-09-26 19:20:13 INFO  revature.objectmapper.ObjectRemover:78 - Table still contains objects.
+2021-09-26 19:20:13 INFO  revature.objectmapper.ObjectRemover:61 - org.postgresql.jdbc.PgStatement@71248c21
+2021-09-26 19:20:13 INFO  revature.objectmapper.ObjectRemover:78 - Table still contains objects.
+2021-09-26 19:20:13 INFO  revature.objectmapper.ObjectReader:103 - Reading objects from com.revature.dummymodels.Goblin
+2021-09-26 19:21:29 INFO  revature.objectmapper.ObjectRemover:61 - Removing ID: 1 from goblin_table
+2021-09-26 19:21:29 INFO  revature.objectmapper.ObjectRemover:78 - Table still contains objects.
+2021-09-26 19:21:29 INFO  revature.objectmapper.ObjectRemover:61 - Removing ID: 8 from goblin_table
+2021-09-26 19:21:29 INFO  revature.objectmapper.ObjectRemover:78 - Table still contains objects.
+2021-09-26 19:21:29 INFO  revature.objectmapper.ObjectRemover:61 - Removing ID: 9 from goblin_table
+2021-09-26 19:21:29 INFO  revature.objectmapper.ObjectRemover:78 - Table still contains objects.
+2021-09-26 19:21:30 INFO  revature.objectmapper.ObjectReader:103 - Reading objects from com.revature.dummymodels.Goblin
+2021-09-26 19:25:03 INFO  revature.objectmapper.ObjectRemover:61 - Removing ID: 1 from goblin_table
+2021-09-26 19:25:03 INFO  revature.objectmapper.ObjectRemover:78 - Table still contains objects.
+2021-09-26 19:25:03 INFO  revature.objectmapper.ObjectRemover:61 - Removing ID: 8 from goblin_table
+2021-09-26 19:25:03 INFO  revature.objectmapper.ObjectRemover:78 - Table still contains objects.
+2021-09-26 19:25:03 INFO  revature.objectmapper.ObjectRemover:61 - Removing ID: 9 from goblin_table
+2021-09-26 19:25:03 INFO  revature.objectmapper.ObjectRemover:78 - Table still contains objects.
+2021-09-26 19:25:03 INFO  revature.objectmapper.ObjectReader:103 - Reading objects from goblin_table

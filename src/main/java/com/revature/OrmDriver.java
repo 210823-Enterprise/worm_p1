@@ -1,6 +1,8 @@
 package com.revature;
 
 import java.sql.Connection;
+
+
 import com.revature.connection.ConnectionFactory;
 import com.revature.dummymodels.Goblin;
 import com.revature.dummymodels.Test;
@@ -14,7 +16,7 @@ import com.revature.objectmapper.ObjectSaver;
 import com.revature.util.Configuration;
 
 public class OrmDriver {
-
+	
 	public static void main(String[] args) {
 
 		Configuration cfg = new Configuration();
@@ -29,6 +31,23 @@ public class OrmDriver {
 		// readable by our framework
 		// let's iterate over all meta models that exist in the config object
 
+		ObjectSaver objS = new ObjectSaver();
+		ObjectRemover objR = new ObjectRemover();
+		ObjectReader objRe = new ObjectReader();
+		
+		
+		Goblin gob1 = new Goblin(1, "Gy", 172, "Bow");
+		Goblin gob2 = new Goblin(8, "Gormoa", 172, "Airplane");
+		Goblin gob3 = new Goblin(9, "Domo", 172, "Tazer");
+//		objS.addObjectToDb(gob1, conn);
+//		objS.addObjectToDb(gob2, conn);
+//		objS.addObjectToDb(gob3, conn);
+//		objR.removeObjectFromDb(gob1, conn);
+//		objR.removeObjectFromDb(gob2, conn);
+//		objR.removeObjectFromDb(gob3, conn);
+		//boolean result =  objR.removeObjectFromDb(gobDel, conn);
+		
+		List<Goblin> gobLins =  (List<Goblin>) (Object) objRe.getObjectsFromDB(gob1, conn);
 		
 		System.out.println("");
 		for (Goblin gobby : gobLins) {

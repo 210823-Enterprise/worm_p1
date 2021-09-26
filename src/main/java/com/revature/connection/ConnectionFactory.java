@@ -42,7 +42,7 @@ public class ConnectionFactory
 			ds.setDriverClassName("org.postgresql.Driver");
 			ds.setMinIdle(5);
 			ds.setDefaultAutoCommit(true);
-			ds.setMaxOpenPreparedStatements(100);
+			ds.setMaxOpenPreparedStatements(10000);
 			
 		} 
 		catch (IOException e)

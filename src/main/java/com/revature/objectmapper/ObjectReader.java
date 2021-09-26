@@ -13,11 +13,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
+import org.apache.log4j.Logger;
+
 import com.revature.util.ColumnField;
 import com.revature.util.MetaModel;
 
 public class ObjectReader extends ObjectMapper {
 
+	private static Logger log = Logger.getLogger(ObjectReader.class);
+	
 	public ObjectReader() {
 		super();
 	}
@@ -96,7 +100,7 @@ public class ObjectReader extends ObjectMapper {
 				terminal.add(object);
 
 			}
-
+			log.info("Reading objects from " + model.getTableName());
 			return terminal;
 
 		} catch (SQLException | ClassNotFoundException | NoSuchMethodException | SecurityException
