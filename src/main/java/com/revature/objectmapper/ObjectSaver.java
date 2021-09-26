@@ -10,6 +10,8 @@ import java.sql.Statement;
 import java.util.List;
 import java.util.Properties;
 
+import org.apache.log4j.Logger;
+
 import com.revature.util.ColumnField;
 import com.revature.util.IdField;
 import com.revature.util.MetaModel;
@@ -17,7 +19,8 @@ import com.revature.util.MetaModel;
 public class ObjectSaver extends ObjectMapper{
 	
 	
-	 
+	private static Logger log = Logger.getLogger(ObjectSaver.class);
+
 	 
 	public ObjectSaver()
 	{
@@ -58,16 +61,16 @@ public class ObjectSaver extends ObjectMapper{
 		if (rs.next()) 
 		  {
 			
-			//log.info("This Object Already Exists in the Database. Updating...");
+			log.info("This Object Already Exists in the Database. Updating...");
 			Update = true;
 		  }
 		else
 		{
-			//log.info(model.getTableName()+" "+model.getIdField().getValue(obj)+" is being put in the Table : "+model.getTableName()+" That already exists in database.");
+			log.info(model.getTableName()+" "+model.getIdField().getValue(obj)+" is being put in the Table : "+model.getTableName()+" That already exists in database.");
 			Update = false;
 		}
 		} catch (Exception e) {
-			//log.info("The Table "+model.getTableName()+" Already exists , "+model.getTableName()+" "+model.getIdField().getValue(obj)+" Is being Inserted.");
+			log.info("The Table "+model.getTableName()+" Already exists , "+model.getTableName()+" "+model.getIdField().getValue(obj)+" Is being Inserted.");
 		}	
 		List<ColumnField> Cols = model.getColumns();
 if(Update == false)
@@ -92,7 +95,7 @@ if(Update == false)
 		       
 				if (stmt.execute(sql)) 
 				  {
-					//log.info("New Table created successfully.");
+					log.info("New Table created successfully.");
 					
 				  }
 			   
@@ -141,7 +144,7 @@ if(Update == false)
 			       
 					if (stmt.execute(sql2)) 
 					  {
-						//log.info(model.getTableName()+" "+model.getIdField().getValue(obj)+" Inserted successfully.");
+						log.info(model.getTableName()+" "+model.getIdField().getValue(obj)+" Inserted successfully.");
 						return true;
 						
 					  }
@@ -179,7 +182,7 @@ else
 	       
 			if (stmt.execute(sql3)) 
 			  {
-				//log.info(model.getTableName()+" "+model.getIdField().getValue(obj));
+				log.info(model.getTableName()+" "+model.getIdField().getValue(obj));
 				return true;
 			  }
 }

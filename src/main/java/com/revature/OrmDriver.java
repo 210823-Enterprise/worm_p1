@@ -2,6 +2,9 @@ package com.revature;
 
 import java.sql.Connection;
 import java.util.List;
+
+import org.apache.log4j.Logger;
+
 import com.revature.connection.ConnectionFactory;
 import com.revature.dummymodels.Goblin;
 import com.revature.dummymodels.Test;
@@ -13,7 +16,7 @@ import com.revature.util.Configuration;
 import com.revature.util.MetaModel;
 
 public class OrmDriver {
-
+	
 	public static void main(String[] args) {
 
 		Configuration cfg = new Configuration();
@@ -32,15 +35,17 @@ public class OrmDriver {
 		ObjectRemover objR = new ObjectRemover();
 		ObjectReader objRe = new ObjectReader();
 		
-		Goblin gob1 = new Goblin(4, "Gobby", 172, "Bow");
-		Goblin gob2 = new Goblin(5, "Gormo", 172, "Airplane");
-		Goblin gob3 = new Goblin(6, "Blanka", 172, "Tazer");
-		//objS.addObjectToDb(gob1, conn);
-		//objS.addObjectToDb(gob2, conn);
-		//objS.addObjectToDb(gob3, conn);
-		Goblin gobDel = new Goblin(1);
-		boolean result =  objR.removeObjectFromDb(gobDel, conn);
-		System.out.println(result);
+		
+		Goblin gob1 = new Goblin(1, "Gy", 172, "Bow");
+		Goblin gob2 = new Goblin(8, "Gormoa", 172, "Airplane");
+		Goblin gob3 = new Goblin(9, "Domo", 172, "Tazer");
+//		objS.addObjectToDb(gob1, conn);
+//		objS.addObjectToDb(gob2, conn);
+//		objS.addObjectToDb(gob3, conn);
+//		objR.removeObjectFromDb(gob1, conn);
+//		objR.removeObjectFromDb(gob2, conn);
+//		objR.removeObjectFromDb(gob3, conn);
+		//boolean result =  objR.removeObjectFromDb(gobDel, conn);
 		
 		List<Goblin> gobLins =  (List<Goblin>) (Object) objRe.getObjectsFromDB(gob1, conn);
 		
