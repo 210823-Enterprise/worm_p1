@@ -1,15 +1,12 @@
 package com.revature.util;
 
 import java.lang.reflect.Field;
-import java.lang.reflect.Method;
 import java.util.LinkedList;
 import java.util.List;
 
 import com.revature.annotations.Column;
 import com.revature.annotations.Entity;
 import com.revature.annotations.Id;
-
-import com.revature.annotations.Table;
 
 
 public class MetaModel<T> {
@@ -18,14 +15,18 @@ public class MetaModel<T> {
 	private IdField primarykeyField;
 	private List<ColumnField> columnFields;
 	
-	// private List<ForeignKeyField> foreignKeyFields
-	private TableField tableField;
-	private String entityName;
 	
-	// MetaModel Constructor here
+	
 	
 	// of() method to take in a clas and transform it to a meta model
 	
+	public MetaModel(Class<T> clazz, IdField primarykeyField, List<ColumnField> columnFields) {
+		super();
+		this.clazz = clazz;
+		this.primarykeyField = primarykeyField;
+		this.columnFields = columnFields;
+	}
+
 	public static <T> MetaModel<T> of(Class<T> clazz) {
 		
 		// first have to check that it's marked with the Entity annotation
@@ -39,7 +40,6 @@ public class MetaModel<T> {
 	public MetaModel(Class<T> clazz) {
 		this.clazz = clazz;
 		this.columnFields = new LinkedList<>();
-		this.tableField = null;
 		
 	}
 	

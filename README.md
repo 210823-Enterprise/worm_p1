@@ -49,7 +49,7 @@ Next, place the following inside your project pom.xml file:
 ```
 
 Finally, inside your project structure you need a application.proprties file. 
- (typically located src/main/resources/)
+ (typically located in src/main/resources/)
  ``` 
   url=path/to/database
   username=username/of/database
@@ -63,12 +63,26 @@ Finally, inside your project structure you need a application.proprties file.
    - #### @Table(name = "table_name)  
       - Indicates that this class is associated with table 'table_name'  
 
+  ### Connection and Class configuration
+  - #### `public Configuration cfg = new Configuration();`
+     - Initializing the configuration reads through annotated classes, creating a database that is ready for the ORM to use.
+  - #### `public static final ConnectionFactory Cf = ConnectionFactory.getInstance();`
+     - Sets up the Connection Factory.
+  - #### `public static Connection conn = Cf.getConnection();`
+     - Returns a connection to the database specified above to be used to execute User API methods.
+  
   ### User API  
-  TODO: Fill out this API with our functions EX:
-  - #### `public static Something getInstance()`  
-     - returns the singleton instance of the class. It is the starting point to calling any of the below methods.  \
+  - #### `public boolean addObjectToDb(Object, Connection)` (ObjectSaver.addObjectToDb(Object, Connection))
+     - Used to add an instance of an annotated object to the database.
+     - Pass in an object and a connection. Returns true if successful, false if unsuccessful.
+     - To update an object, pass in the Object with the ID of the object that needs to be updated, along with updated values.
+  - #### `public boolean removeObjectFromDb(Object, Connection)` (ObjectRemover.removeObjectFromDb(Object, Connection))
+     - Used to remove an instance of an annotated object from the database.
+     - Pass in an object and a connection. Returns true if successful, false if unsuccessful.
+     - If there are no more objects in the database from the specified class, the table will be deleted.
+  - #### `public List<Object> getObjectsFromDB(Object obj, Connection conn)` ObjectReader
  
-
+ObjectSaver objS = new ObjectSaver();
 
 
 ## License

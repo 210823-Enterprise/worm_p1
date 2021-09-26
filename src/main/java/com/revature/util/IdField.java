@@ -3,7 +3,6 @@ package com.revature.util;
 import java.lang.reflect.Field;
 
 import com.revature.annotations.Id;
-import com.revature.dummymodels.Test;
 
 public class IdField {
 

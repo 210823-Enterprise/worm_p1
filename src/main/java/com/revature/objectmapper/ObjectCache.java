@@ -1,108 +1,67 @@
 package com.revature.objectmapper;
 
-import java.util.ArrayList;
+
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
+import com.revature.util.IdField;
+import com.revature.util.MetaModel;
 
-/**
- * This class handles caching objects stored in database tables.
- * Singleton so that there's only one instance.
- *
- */
-public class ObjectCache {
-	
-//	static final  ObjectCache obj_cache = new ObjectCache();
-//	private final HashMap<Class<?>, HashSet<Object>> cache;
-//
-//	private ObjectCache() {
-//		super();
-//		cache = new HashMap<>();
-//	}
-//	
-//	public static ObjectCache getInstance() {
-//		
-//		return obj_cache;
-//		
-//	}
-//	
-//	
-//	
-//	public boolean insertIntoCache(HashSet<Object> obj)
-//	{
-//		if(obj != null)
-//		{
-//		cache.put(obj.getClass() , obj);
-//		return true;
-//		}
-//		else
-//		{
-//		return false;
-//		}
-//		
-//	}
-//	public boolean removeFromCache(HashSet<Object> obj)
-//	{
-//		if(cache.containsKey(obj.getClass()))
-//		{
-//			cache.remove(obj.getClass());
-//			return true;
-//		}
-//		return false;
-//		
-//		
-//	}
-//	public boolean updateObjectInCache(HashSet<Object> obj)
-//	{
-//		try
-//		{
-//		removeFromCache(obj);
-//		insertIntoCache(obj);
-//		return true;
-//		}
-//		catch(Exception e)
-//		{
-//		return false;
-//		}
-//		
-//		
-//	}
-//	
-	
-	
-List<Object> cache = new ArrayList<>();	
+public class ObjectCache 
+{
+    private final static ObjectCache obj_cache = new ObjectCache();
+    private static HashMap<String , MetaModel<?>> cache;
 
-static final ObjectCache obj_cache = new ObjectCache();
+    private ObjectCache() 
+    {
+        super();
+        cache = new HashMap<>();
+    }
 
-	public boolean Add(Object obj)
-	{
-		if(obj != null)
-		{
-		    cache.add(obj);
-		    return true;
-		}
-		else
-		{
-			return false;
-		}
-		
-		
-	}
-	
-	public boolean Remove(Object obj)
-	{
-		if(obj != null)
-		{
-		    cache.remove(obj);
-		    return true;
-		}
-		else
-		{
-			return false;
-		}
-	}
-	
-	
-	
-	
+    public static ObjectCache getInstance()
+    {
+        return obj_cache;
+    }
+
+    
+    public static HashMap<String , MetaModel<?>> getCache() 
+    {
+        return cache;
+    }
+
+   
+    public static boolean putObjInCache(final Object obj) 
+    {
+    	MetaModel<?> model = MetaModel.of(obj.getClass());
+    	IdField Pk = model.getIdField();
+    	String id = (String) Pk.getValue(obj);
+        if(!cache.containsKey(id)) 
+        {
+            cache.put(id, model);
+            return true;
+        }
+        else
+        {
+        	return false;
+        }
+    }
+    public static boolean removeObjFromCache(final Object obj) 
+    {
+    	MetaModel<?> model = MetaModel.of(obj.getClass());
+    	IdField Pk = model.getIdField();
+    	String id = (String) Pk.getValue(obj);
+        if(cache.containsKey(id)) 
+        {
+            cache.remove(id, model);
+            return true;
+        }
+        else
+        {
+        	return false;
+        }
+    }
+
+    
+
+    
+/////
+
 }
