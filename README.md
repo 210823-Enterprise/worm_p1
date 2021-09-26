@@ -19,17 +19,16 @@ Creators: Erick Johnson, Matthew Erikson (Group 5)
 ## Features
 
 List of features ready and TODOs for future development  
-* None yet
-* etc...
+* Easy to use and straightforward user API.
+* No need for any SQL by the user 
+* Straightforward and simple Annotation based for ease of use. 
+* Allow ORM to build table based on Annotations in Entities. 
+* Caching system
 
 To-do list: [`for future iterations`]
-* Easy to use and straightforward user API.  
-* No need for SQL, HQL, or any databse specific language.  
-* Straightforward and simple Annotation based for ease of use. 
-* Mapping of join columns inside of entities.    
-* Implement of aggregate functions.  
-* Allow ORM to build table based on Annotations in Entities.  
-* etc...
+  
+* Add additional database support aside SQL  
+* Improve database interaction speed
 
 ## Getting Started  
 Currently project must be included as local dependency. to do so:
@@ -59,7 +58,17 @@ Finally, inside your project structure you need a application.proprties file.
 ## Usage  
   ### Annotating classes  
   All classes which represent objects in database must be annotated.\
-  TODO: Fill out these annotations with our annotations EX:
+  Each class must also contain a full argument constructor.
+   - #### @Entity(tableName = "table_name")  
+      - Indicates that this class is associated with table 'table_name'  
+   - #### @Column(columnName = "table_name")  
+      - Indicates that this class is associated with table 'table_name' 
+   - #### @Id(name = "table_name)  
+      - Indicates that this class is associated with table 'table_name'  
+   - #### @Id(name = "table_name)  
+      - Indicates that this class is associated with table 'table_name'  
+   - #### @GeneratedValue(name = "table_name)  
+      - Indicates that this class is associated with table 'table_name'  
    - #### @Table(name = "table_name)  
       - Indicates that this class is associated with table 'table_name'  
 
