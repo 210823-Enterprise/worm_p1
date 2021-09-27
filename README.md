@@ -60,17 +60,20 @@ Finally, inside your project structure you need a application.proprties file.
   All classes which represent objects in database must be annotated.\
   Each class must also contain a full argument constructor.
    - #### @Entity(tableName = "table_name")  
+      - Indicates that this class is associated with entity 'table_name' 
+      `@Entity(tableName="table_name")`\
+`public class Goblin`
+   - #### @Id(columnName = "Id")  
+      - Indicates that this value is the objects id field  
+      `	@Id(columnName="Id")`\
+`public int id;`
+   - #### @Column(columnName = "column_name")  
+      - Indicates that this class is associated with table 'table_name'
+  `	@Column(columnName="name")`\
+`public String goblinName;`
+   - #### @Table(name = "table_name")  
       - Indicates that this class is associated with table 'table_name'  
-   - #### @Column(columnName = "table_name")  
-      - Indicates that this class is associated with table 'table_name' 
-   - #### @Id(name = "table_name)  
-      - Indicates that this class is associated with table 'table_name'  
-   - #### @Id(name = "table_name)  
-      - Indicates that this class is associated with table 'table_name'  
-   - #### @GeneratedValue(name = "table_name)  
-      - Indicates that this class is associated with table 'table_name'  
-   - #### @Table(name = "table_name)  
-      - Indicates that this class is associated with table 'table_name'  
+
 
   ### Connection and Class configuration
   - #### `public Configuration cfg = new Configuration();`
