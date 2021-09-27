@@ -22,6 +22,7 @@ public class ObjectSaver extends ObjectMapper{
 	public ObjectSaver()
 	{
 		super();
+		
 	}
 	
 	
@@ -32,6 +33,8 @@ public class ObjectSaver extends ObjectMapper{
 	public boolean addObjectToDb(Object obj, Connection conn) {
 		ClassLoader classLoader = getClass().getClassLoader();
 		Properties props = new Properties();
+		
+		
 		
 		try {
 			
@@ -49,8 +52,8 @@ public class ObjectSaver extends ObjectMapper{
 		
 		boolean Update = false;
 		
-		String check = "SELECT * FROM "+props.getProperty("DBschema")+"."+model.getTableName()+" WHERE "+Pk.getColumnName()+" = "+Pk.getValue(obj)+" ";
-				     
+		String check = "SELECT * FROM "+props.getProperty("DBschema")+".\""+obj.getClass().getSimpleName()+"\" WHERE "+Pk.getColumnName()+" = "+Pk.getValue(obj)+" ";
+		System.out.println(check);	     
 		try {
 			stmt = conn.createStatement(); 
 			stmt.execute(check); 
@@ -71,9 +74,11 @@ public class ObjectSaver extends ObjectMapper{
 		}	
 		List<ColumnField> Cols = model.getColumns();
 if(Update == false)
-{		String sql = "CREATE TABLE IF NOT EXISTS "+props.getProperty("DBschema")+"."+model.getTableName()+" ("+Pk.getColumnName()+" "+Pk.getType()+" ,";
+{		String sql = "CREATE TABLE IF NOT EXISTS "+props.getProperty("DBschema")+".\""+obj.getClass().getSimpleName()+"\" ("+Pk.getColumnName()+" "+Pk.getType()+" ,";
+        
 		try
 		{
+			System.out.println(sql);
 			   for(int i =0; i < Cols.size(); i++)
 			   {
 				  
@@ -106,8 +111,8 @@ if(Update == false)
 		
 		try
 		{
-		String sql2 = "BEGIN; INSERT INTO "+props.getProperty("DBschema")+"."+model.getTableName()+" ( id , ";
-		
+		String sql2 = "BEGIN; INSERT INTO "+props.getProperty("DBschema")+".\""+obj.getClass().getSimpleName()+"\" ( id , ";
+		System.out.println(sql2);
 		       for(int i =0; i < Cols.size(); i++)
 		        {
 		    	  
@@ -157,8 +162,8 @@ else
 	Update = false;
 		try
 		{
-          String sql3 = "BEGIN; Update "+props.getProperty("DBschema")+"."+model.getTableName()+" SET ";
-
+          String sql3 = "BEGIN; UPDATE "+props.getProperty("DBschema")+".\""+obj.getClass().getSimpleName()+"\" SET ";
+          System.out.println(sql3);
        for(int i =0; i < Cols.size(); i++)
         {
     	  

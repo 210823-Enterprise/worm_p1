@@ -15,6 +15,17 @@ public class Test {
 	
 	@Column(columnName="PassWORD")
 	public String testPass = "Pass";
+
+	public Test(int id, String testUsername, String testPass) {
+		super();
+		this.id = id;
+		this.testUsername = testUsername;
+		this.testPass = testPass;
+	}
+
+	public Test() {
+		super();
+	}
 	
 	
 

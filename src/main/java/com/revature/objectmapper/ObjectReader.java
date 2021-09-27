@@ -41,7 +41,7 @@ public class ObjectReader extends ObjectMapper {
 
 		MetaModel<?> model = MetaModel.of(obj.getClass());
 
-		String sql = "SELECT * FROM " + props.getProperty("DBschema") + "." + model.getTableName();
+		String sql = "SELECT * FROM " + props.getProperty("DBschema") + "." +model.getSimpleClassName();
 
 		Statement pstmt = null;
 		try {
