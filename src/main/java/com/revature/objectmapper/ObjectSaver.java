@@ -53,7 +53,7 @@ public class ObjectSaver extends ObjectMapper{
 		boolean Update = false;
 		
 		String check = "SELECT * FROM "+props.getProperty("DBschema")+".\""+obj.getClass().getSimpleName()+"\" WHERE "+Pk.getColumnName()+" = "+Pk.getValue(obj)+" ";
-		System.out.println(check);	     
+		     
 		try {
 			stmt = conn.createStatement(); 
 			stmt.execute(check); 
@@ -78,7 +78,6 @@ if(Update == false)
         
 		try
 		{
-			System.out.println(sql);
 			   for(int i =0; i < Cols.size(); i++)
 			   {
 				  
@@ -112,7 +111,7 @@ if(Update == false)
 		try
 		{
 		String sql2 = "BEGIN; INSERT INTO "+props.getProperty("DBschema")+".\""+obj.getClass().getSimpleName()+"\" ( id , ";
-		System.out.println(sql2);
+		
 		       for(int i =0; i < Cols.size(); i++)
 		        {
 		    	  
@@ -163,7 +162,7 @@ else
 		try
 		{
           String sql3 = "BEGIN; UPDATE "+props.getProperty("DBschema")+".\""+obj.getClass().getSimpleName()+"\" SET ";
-          System.out.println(sql3);
+          
        for(int i =0; i < Cols.size(); i++)
         {
     	  

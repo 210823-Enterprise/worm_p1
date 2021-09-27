@@ -1,6 +1,5 @@
 package PlaceholderPackage;
 
-import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import java.sql.Connection;
@@ -8,8 +7,8 @@ import java.sql.Connection;
 import org.junit.Test;
 
 import com.revature.connection.ConnectionFactory;
+import com.revature.dummymodels.Goblin;
 import com.revature.objectmapper.ObjectCache;
-import com.revature.util.MetaModel;
 
 public class PlaceholderTest {
 
@@ -29,15 +28,20 @@ public class PlaceholderTest {
 	public void testputObjInCache()
 	{
 		
-		Object obj = new Object();
+		Goblin g = new Goblin();
 		
-		boolean flag = ObjectCache.putObjInCache(obj , conn);
+		boolean flag = ObjectCache.putObjInCache(g , conn);
 		
 		assertTrue(flag == true);
 		
 	}
 	
-	
+	@Test
+	public void testSaveCache()
+	{
+		assertTrue(ObjectCache.saveCache(conn));
+		
+	}
 	
 	
 }

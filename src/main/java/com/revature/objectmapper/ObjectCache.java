@@ -35,8 +35,6 @@ public class ObjectCache
    
     public static boolean putObjInCache(Object obj , Connection conn) 
     {
-    	System.out.println("in putObjInCache");
-    	
     	MetaModel<?> model = MetaModel.of(obj.getClass()); // use this to creaet an instance of the object
 		IdField Pk = model.getIdField();
         cache.put( Integer.getInteger( Pk.getValue(obj).toString()) , obj);
@@ -47,7 +45,7 @@ public class ObjectCache
     {
     	MetaModel<?> model = MetaModel.of(obj.getClass()); // use this to creaet an instance of the object
 		IdField Pk = model.getIdField();
-    	System.out.println("getting Object.");
+    	
     	if(cache.containsKey(Pk.getValue(obj)))
     	{
     		return cache.get(Pk.getValue(obj));
