@@ -82,17 +82,17 @@ Finally, inside your project structure you need a application.proprties file.
      - Returns a connection to the database specified above to be used to execute User API methods.
   
   ### User API  
-  - #### `public boolean addObjectToDb(Object, Connection)` (ObjectSaver.addObjectToDb(Object, Connection))
+  - #### `public boolean addObjectToDb(Object, Connection)` (ObjectSaver objS = new ObjectSaver() -- objS.addObjectToDb(Object, Connection))
      - Used to add an instance of an annotated object to the database.
      - Pass in an object and a connection. Returns true if successful, false if unsuccessful.
      - To update an object, pass in the Object with the ID of the object that needs to be updated, along with updated values.
-  - #### `public boolean removeObjectFromDb(Object, Connection)` (ObjectRemover.removeObjectFromDb(Object, Connection))
+  - #### `public boolean removeObjectFromDb(Object, Connection)` (ObjectRemover objR = new ObjectRemover() -- objR.removeObjectFromDb(Object, Connection))
      - Used to remove an instance of an annotated object from the database.
      - Pass in an object and a connection. Returns true if successful, false if unsuccessful.
      - If there are no more objects in the database from the specified class, the table will be deleted.
-  - #### `public List<Object> getObjectsFromDB(Object obj, Connection conn)` ObjectReader
- 
-ObjectSaver objS = new ObjectSaver();
+  - #### `public List<Object> getObjectsFromDB(Object obj, Connection conn)` (ObjectReader objRe = new ObjectReader() -- (*your object class*) objRe.getObjectsFromDB(Object, Connection))
+     - Used to retrieve all objects of one annotated object class from the database
+     - Returned list must be cast as your object.
 
 
 ## License
