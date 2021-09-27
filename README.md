@@ -60,7 +60,7 @@ Finally, inside your project structure you need a application.proprties file.
   All classes which represent objects in database must be annotated.\
   Each class must also contain a full argument constructor.
    - #### @Entity(tableName = "table_name")  
-      - Indicates that this class is associated with entity 'table_name' 
+      - Indicates that this class is associated with entity 'table_name' \
       `@Entity(tableName="table_name")`\
 `public class Goblin`
    - #### @Id(columnName = "Id")  
@@ -68,7 +68,7 @@ Finally, inside your project structure you need a application.proprties file.
       `	@Id(columnName="Id")`\
 `public int id;`
    - #### @Column(columnName = "column_name")  
-      - Indicates that this class is associated with table 'table_name'
+      - Indicates that this class is associated with table 'table_name'\
   `	@Column(columnName="name")`\
 `public String goblinName;`
    - #### @Table(name = "table_name")  
