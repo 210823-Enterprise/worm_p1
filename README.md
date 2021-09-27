@@ -71,8 +71,6 @@ Finally, inside your project structure you need a application.proprties file.
       - Indicates that this class is associated with table 'table_name'\
   `	@Column(columnName="name")`\
 `public String goblinName;`
-   - #### @Table(name = "table_name")  
-      - Indicates that this class is associated with table 'table_name'  
 
 
   ### Connection and Class configuration
