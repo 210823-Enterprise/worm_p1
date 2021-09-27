@@ -93,6 +93,15 @@ Finally, inside your project structure you need a application.proprties file.
   - #### `public List<Object> getObjectsFromDB(Object obj, Connection conn)`  (ObjectReader objRe = new ObjectReader() -- (*your object class*) objRe.getObjectsFromDB(Object, Connection))
      - Used to retrieve all objects of one annotated object class from the database
      - Returned list must be cast as your object.
+  - #### `public static boolean putObjInCache(final Object obj)` (ObjectCache.putObjInCaache(Object))
+     - Used to put an object into the cache
+     - Returns true if the object was successfully added to the cache
+  - #### `public static boolean removeObjFromCache(final Object obj)` (ObjectCache.removeObjFromCache(Object))
+     - Used to remove an object from the cache
+     - Returns true if the object was successfully removed from the cache
+  - #### `public static HashMap<String , MetaModel<?>> getCache()` (ObjectCache.getCache())
+     - Used to get the current cache
+     - Returns a HashMap of the current cache
 
 
 ## License
