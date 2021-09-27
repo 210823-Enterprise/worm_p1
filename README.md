@@ -90,7 +90,7 @@ Finally, inside your project structure you need a application.proprties file.
      - Used to remove an instance of an annotated object from the database.
      - Pass in an object and a connection. Returns true if successful, false if unsuccessful.
      - If there are no more objects in the database from the specified class, the table will be deleted.
-  - #### `public List<Object> getObjectsFromDB(Object obj, Connection conn)` (ObjectReader objRe = new ObjectReader() -- (*your object class*) objRe.getObjectsFromDB(Object, Connection))
+  - #### `public List<Object> getObjectsFromDB(Object obj, Connection conn)` \(ObjectReader objRe = new ObjectReader() -- (*your object class*) objRe.getObjectsFromDB(Object, Connection))
      - Used to retrieve all objects of one annotated object class from the database
      - Returned list must be cast as your object.
 
